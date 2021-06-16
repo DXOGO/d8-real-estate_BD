@@ -1,0 +1,10 @@
+temos 80 agentes em 3 departamentos
+33 proprietarios e 33 interessados
+temos 25 SÓ interessados + 25 SÓ proprietarios +  8 interessados & proprietarios
+desses 25 interessados há 12 marcacoes para algum imovel e 8 propostas 
+existem 40 imoveis no mercado (22-> sem proposta/marcacao + 6->proposta s/marcacao + 10->marcacao s/proposta + 2-> com marcacao/proposta)
+tipo de negocio -> 1-venda 2-aluguer 3-trespasse
+tipo de comercial -> 1-escritorio 2-loja 3-armazem
+tipo habitacional -> 1-apart 2-quinta 3-casa 4-terreno 5-quarto
+dos 40 imoveis: 28-habitacional (8 apt, 10 casas, 5 quint, 2 terr, 3 quartos), 12-comercial(4 escr, 4 loj, 4 armz)
+tem_add_on-> 1-churrasqueira 2-piscina 3-painel solar 4-jardim 5-jacuzzi 6-garagem

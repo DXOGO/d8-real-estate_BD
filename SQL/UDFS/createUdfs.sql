@@ -1,7 +1,7 @@
 -- UDFS
 
 
--- validar mail
+-- ver se mail existe
 DROP FUNCTION Proj.[udf_validateEmail]
 GO
 
@@ -15,7 +15,7 @@ END
 GO
 
 
--- validar nif
+-- ver se nif existe
 DROP FUNCTION Proj.[udf_validadeNIF]
 GO
 
@@ -238,5 +238,29 @@ BEGIN
 END
 GO
 
+
+-- get number of employyes per department
+DROP FUNCTION Proj.[udf_getDepNumAgent]
+GO
+CREATE FUNCTION Proj.[udf_getDepNumAgent] () ( RETURNS TABLE
+AS
+BEGIN
+    RETURN (SELECT D.dep_number, D.localizacao, COUNT(*) 
+            FROM (Proj.[agente] AS A JOIN Proj.[dept] AS D ON A.dep_no = D.dep_number) 
+END
+GO
+
+
+-- get number of employyes for SPECIFIC department
+DROP FUNCTION Proj.[udf_getDepNumAgent]
+GO
+CREATE FUNCTION Proj.[udf_getDepNumAgent] (@depno INT) ( RETURNS TABLE
+AS
+BEGIN
+    RETURN (SELECT D.dep_number, D.localizacao, COUNT(*) 
+            FROM (Proj.[agente] AS A JOIN Proj.[dept] AS D ON A.dep_no = D.dep_number) 
+            WHERE @depno = A.dep_no
+END
+GO
 
 

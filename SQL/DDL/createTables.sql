@@ -18,7 +18,6 @@ create table Proj.[pessoa] ( -- pessoa
 CREATE TABLE Proj.[dept] ( -- departamento
 	dep_number INT CHECK (dep_number > 0) NOT NULL,
 	localizacao VARCHAR(50) NOT NULL,
-	num_funcionarios INT NOT NULL
 
     PRIMARY KEY(dep_number)
 );

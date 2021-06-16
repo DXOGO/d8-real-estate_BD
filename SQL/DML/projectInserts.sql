@@ -1,9 +1,9 @@
 -- INSERTS
 
 -- 3 DEPARTAMENTOS que somam 80 AGENTES
-INSERT INTO imob_dept (dep_number, localizacao, num_funcionarios) values (1, 'Aveiro', 22);
-INSERT INTO imob_dept (dep_number, localizacao, num_funcionarios) values (2, 'Coimbra', 40);
-INSERT INTO imob_dept (dep_number, localizacao, num_funcionarios) values (3, 'Lisboa', 18);
+INSERT INTO imob_dept (dep_number, localizacao) values (1, 'Aveiro');
+INSERT INTO imob_dept (dep_number, localizacao) values (2, 'Coimbra');
+INSERT INTO imob_dept (dep_number, localizacao) values (3, 'Lisboa');
 
 
 -- INTERESSADOS com MARCACAO (sao 12)

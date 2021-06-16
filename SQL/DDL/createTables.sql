@@ -16,7 +16,7 @@ create table Proj.[pessoa] ( -- pessoa
 );
 
 CREATE TABLE Proj.[dept] ( -- departamento
-	dep_number INT NOT NULL,
+	dep_number INT CHECK (dep_number > 0) NOT NULL,
 	localizacao VARCHAR(50) NOT NULL,
 	num_funcionarios INT NOT NULL
 
@@ -26,7 +26,7 @@ CREATE TABLE Proj.[dept] ( -- departamento
 
 CREATE TABLE Proj.[agente] ( -- agente
 	agente_nif INT(9) NOT NULL,
-	num_agente INT NOT NULL,
+	num_agente INT CHECK (num_agente > 0) NOT NULL,
 	dep_no INT NOT NULL,
 
     FOREIGN KEY(agente_nif) REFERENCES Proj.[pessoa](nif),
@@ -49,8 +49,8 @@ CREATE TABLE Proj.[proprietario] ( -- proprietario
 
 CREATE TABLE Proj.[marcacao] ( -- marcacao
 	data_marc DATE NOT NULL,
-	interessado_nif INT(9),
-	imovel_codigo VARCHAR(5),
+	interessado_nif INT(9) NOT NULL,
+	imovel_codigo VARCHAR(5) NOT NULL,
 
     PRIMARY KEY(data_marc),
     FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif)
@@ -58,11 +58,11 @@ CREATE TABLE Proj.[marcacao] ( -- marcacao
 
 CREATE TABLE Proj.[imovel] ( -- imovel
 	imovel_codigo VARCHAR(5) NOT NULL,
-	preco INT NOT NULL,
+	preco INT NOT NULL CHECK (preco > 0),
 	localizacao VARCHAR(50) NOT NULL,
 	ano_construcao INT NOT NULL,
-	area_total INT NOT NULL,
-	area_util INT NOT NULL,
+	area_total INT NOT NULL CHECK (area_total > 0),
+	area_util INT NOT NULL CHECK (area_util <= area_total AND area_util > 0),
 	proprietario_nif INT(9) NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
@@ -125,7 +125,7 @@ CREATE TABLE Proj.[habitacional] ( -- imovel habitacional
 	imovel_codigo VARCHAR(5) NOT NULL,
 	num_quartos INT NOT NULL,
 	wcs INT NOT NULL,
-	tipo_habitacional_id INT NOT NULL,
+	tipo_habitacional_id INT NOT NULL CHECK,
 
     PRIMARY KEY(imovel_codigo),
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),

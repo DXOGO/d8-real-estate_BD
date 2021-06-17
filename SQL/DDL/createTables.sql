@@ -4,13 +4,13 @@ GO
 CREATE SCHEMA Proj;
 GO
 
-create table Proj.[pessoa] ( -- pessoa
-	nif INT(9) NOT NULL,
+CREATE TABLE Proj.[pessoa] ( -- pessoa
+	nif INT NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	birth DATE NOT NULL,
 	morada VARCHAR(50) NOT NULL,
 	email VARCHAR(50) NOT NULL,
-	num_tlm INT(9) NOT NULL,
+	num_tlm INT NOT NULL,
 
     PRIMARY KEY(nif)
 );
@@ -24,31 +24,34 @@ CREATE TABLE Proj.[dept] ( -- departamento
 
 
 CREATE TABLE Proj.[agente] ( -- agente
-	agente_nif INT(9) NOT NULL,
+	agente_nif INT NOT NULL,
 	num_agente INT CHECK (num_agente > 0) NOT NULL,
 	dep_no INT NOT NULL,
 
+	PRIMARY KEY(agente_nif),
     FOREIGN KEY(agente_nif) REFERENCES Proj.[pessoa](nif),
     FOREIGN KEY (dep_no) REFERENCES Proj.[dept](dep_number)
 );
 
 CREATE TABLE Proj.[interessado] ( -- interessado
-	interessado_nif INT(9) NOT NULL,
+	interessado_nif INT NOT NULL,
 
+	PRIMARY KEY(interessado_nif),
 	FOREIGN KEY(interessado_nif) REFERENCES Proj.[pessoa](nif)
 );
 
 CREATE TABLE Proj.[proprietario] ( -- proprietario
-	proprietario_nif INT(9) NOT NULL,
-	agente_nif INT(9) NOT NULL,
+	proprietario_nif INT NOT NULL,
+	agente_nif INT NOT NULL,
 
+	PRIMARY KEY(proprietario_nif),
 	FOREIGN KEY(proprietario_nif) REFERENCES Proj.[pessoa](nif),
 	FOREIGN KEY(agente_nif) REFERENCES Proj.[agente](agente_nif),
 );
 
 CREATE TABLE Proj.[marcacao] ( -- marcacao
 	data_marc DATE NOT NULL,
-	interessado_nif INT(9) NOT NULL,
+	interessado_nif INT NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 
     PRIMARY KEY(data_marc),
@@ -62,7 +65,7 @@ CREATE TABLE Proj.[imovel] ( -- imovel
 	ano_construcao INT NOT NULL,
 	area_total INT NOT NULL CHECK (area_total > 0),
 	area_util INT NOT NULL CHECK (area_util <= area_total AND area_util > 0),
-	proprietario_nif INT(9) NOT NULL,
+	proprietario_nif INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
     FOREIGN KEY(proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif)
@@ -76,20 +79,20 @@ CREATE TABLE Proj.[tipoNegocio] ( -- tipo de negocio
 );
 
 CREATE TABLE Proj.[negocio] ( -- negocio
-	referencia VARCHAR(9) NOT NULL,
+	referencia VARCHAR NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 	tipo_negocio_id INT NOT NULL
 
     PRIMARY KEY(referencia),
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),
-    FOREIGN KEY(tipo_negocio_id) REFERENCES Proj.[tipoNegocio]](id)
+    FOREIGN KEY(tipo_negocio_id) REFERENCES Proj.[tipoNegocio](id)
 );
 
 CREATE TABLE Proj.[proposta] ( -- proposta
 	proposta_codigo VARCHAR(5) NOT NULL,
 	valor INT NOT NULL,
-	interessado_nif INT(9) NOT NULL,
-	imovel_codigo INT(9) NOT NULL,
+	interessado_nif INT NOT NULL,
+	imovel_codigo VARCHAR(5) NOT NULL,
 
     PRIMARY KEY(proposta_cod),
     FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif),
@@ -109,7 +112,7 @@ CREATE TABLE Proj.[comercial] ( -- imovel comercial
 	tipo_comercial_id INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
-    FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo)
+    FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),
 	FOREIGN KEY(tipo_comercial_id) REFERENCES Proj.[tipoComercial](id)
 );
 
@@ -124,7 +127,7 @@ CREATE TABLE Proj.[habitacional] ( -- imovel habitacional
 	imovel_codigo VARCHAR(5) NOT NULL,
 	num_quartos INT NOT NULL,
 	wcs INT NOT NULL,
-	tipo_habitacional_id INT NOT NULL CHECK,
+	tipo_habitacional_id INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),

@@ -1,9 +1,9 @@
 -- INSERTS
 
 -- 3 DEPARTAMENTOS que somam 80 AGENTES
-INSERT INTO Proj.dept (dep_number, localizacao) values (1, 'Aveiro');
-INSERT INTO Proj.dept (dep_number, localizacao) values (2, 'Coimbra');
-INSERT INTO Proj.dept (dep_number, localizacao) values (3, 'Lisboa');
+INSERT INTO Proj.[dept] (dep_number, localizacao) values (1, 'Aveiro');
+INSERT INTO Proj.[dept] (dep_number, localizacao) values (2, 'Coimbra');
+INSERT INTO Proj.[dept] (dep_number, localizacao) values (3, 'Lisboa');
 
 
 -- INTERESSADOS com MARCACAO (sao 12)
@@ -132,23 +132,24 @@ INSERT INTO Proj.[tipoNegocio] (id, designacao) values (2, 'aluguer');
 INSERT INTO Proj.[tipoNegocio] (id, designacao) values (3, 'trespasse');
 
 -- TIPO DE IMOVEL COMERCIAL: 1-escritorio, 2-loja, 3-armazem
-INSERT INTO Proj.tipoComercial (id, designacao) values (1, 'escritorio');
-INSERT INTO Proj.tipoComercial (id, designacao) values (2, 'loja');
-INSERT INTO Proj.tipoComercial (id, designacao) values (3, 'armazem');
+INSERT INTO Proj.[tipoComercial] (id, designacao) values (1, 'escritorio');
+INSERT INTO Proj.[tipoComercial] (id, designacao) values (2, 'loja');
+INSERT INTO Proj.[tipoComercial] (id, designacao) values (3, 'armazem');
 
 -- 12 IMOVEIS COMERCIAIS
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('S2888', false, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('F2356', false, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('R2869', true, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('Y2579', false, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('M2699', true, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('X2314', true, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('A2992', true, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('P2323', true, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('H2139', true, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('B2714', false, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('Z2080', false, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('J2482', false, 2);
+-- 0 -> false, 1 -> true
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('S2888', 0, 2);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('F2356', 0, 3);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('R2869', 1, 3);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('Y2579', 0, 1);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('M2699', 1, 1);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('X2314', 1, 2);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('A2992', 1, 3);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('P2323', 1, 1);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('H2139', 1, 3);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('B2714', 0, 1);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('Z2080', 0, 2);
+INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('J2482', 0, 2);
 
 
 -- TIPO DE IMOVEL HABITACIONAL: 1-apartamento, 2-quinta, 3-casa, 4-terreno, 5-quarto

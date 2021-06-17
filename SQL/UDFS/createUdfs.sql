@@ -25,7 +25,7 @@ CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT) RETURNS INT
 AS
 BEGIN
 	DECLARE @temp AS INT
-	SET @temp = ( SELECT person_nif FROM Proj.[Pessoa] AS P WHERE P.nif = @nif);
+	SET @temp = ( SELECT nif FROM Proj.[Pessoa] AS P WHERE P.nif = @nif);
 	if @temp is null
 		RETURN 0;
 	RETURN @temp;
@@ -34,34 +34,30 @@ GO
 
 
 -- all info about pessoa
-DROP FUNCTION Proj.[udf_getPessoaInfo]
-GO
+-- DROP FUNCTION Proj.[udf_getPessoaInfo]
+-- GO
 
-CREATE FUNCTION Proj.[udf_getPessoaInfo] (@nif INT(9)) RETURNS TABLE
+CREATE FUNCTION Proj.[udf_getPessoaInfo](@nif INT) RETURNS TABLE
 AS
-BEGIN 
-    RETURN (SELECT * FROM Proj.[pessoa] AS P WHERE P.nif = @nif);
-END
+	RETURN (SELECT * FROM Proj.[pessoa] AS P WHERE P.nif = @nif);
 GO
 
 
 -- all info about agente
-DROP FUNCTION Proj.[udf_getAgenteInfo]
-GO
+-- DROP FUNCTION Proj.[udf_getAgenteInfo]
+-- GO
 
-CREATE FUNCTION Proj.[udf_getAgenteInfo] (@nif INT(9)) RETURNS TABLE
+CREATE FUNCTION Proj.[udf_getAgenteInfo] (@nif INT) RETURNS TABLE
 AS
-BEGIN 
     RETURN (SELECT * FROM Proj.[agente] AS A JOIN Proj.[Pessoa] AS P ON A.nif = P.nif) WHERE A.nif = @nif;
-END
 GO
 
 
 -- pessoa só pode ser interessado e/ou proprietario se nao for agente (agente é SÓ agente)
-DROP FUNCTION Proj.[udf_isAgent]
-GO
+-- DROP FUNCTION Proj.[udf_isAgent]
+-- GO
 
-CREATE FUNCTION Proj.[udf_isAgent](@nif INT(9)) RETURNS INT
+CREATE FUNCTION Proj.[udf_isAgent](@nif INT) RETURNS INT
 AS
 BEGIN
     DECLARE @temp AS INT
@@ -79,11 +75,11 @@ GO
 
 
 -- get all imoveis no mercado
-DROP FUNCTION Proj.[udf_getAllImob]
-GO
+-- DROP FUNCTION Proj.[udf_getAllImob]
+-- GO
 
 CREATE FUNCTION Proj.[udf_getAllImob] () RETURNS @table TABLE (preco INT NOT NULL, localizacao VARCHAR(50) NOT NULL,
-                                                                ano_construcao INT NOT NULL, area_total INT NOT NULL, area_util INT NOT NULL)
+ano_construcao INT NOT NULL, area_total INT NOT NULL, area_util INT NOT NULL)
 AS
 BEGIN
     DECLARE @preco AS INT, @localizacao AS VARCHAR(50),@ano_construcao AS INT,
@@ -101,11 +97,9 @@ GO
 
 CREATE FUNCTION Proj.[udf_getCityImob] (@loc VARCHAR(50)) RETURNS TABLE
 AS
-BEGIN 
     RETURN (SELECT preco, localizacao, ano_construcao, area_total, area_util
             FROM Proj.[imovel] AS I WHERE I.localizacao = @loc
             ORDER BY preco ASC);
-END
 GO
 
 

@@ -19,7 +19,7 @@ GO
 DROP FUNCTION Proj.[udf_validadeNIF]
 GO
 
-CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT(9)) RETURNS INT
+CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT) RETURNS INT
 AS
 BEGIN
 	DECLARE @temp AS INT
@@ -35,7 +35,7 @@ GO
 DROP FUNCTION Proj.[udf_getPessoaInfo]
 GO
 
-CREATE FUNCTION Proj.[udf_getPessoaInfo] (@nif INT(9)) RETURNS TABLE
+CREATE FUNCTION Proj.[udf_getPessoaInfo] (@nif INT) RETURNS TABLE
 AS
 BEGIN 
     RETURN (SELECT * FROM Proj.[pessoa] AS P WHERE P.nif = @nif);
@@ -47,7 +47,7 @@ GO
 DROP FUNCTION Proj.[udf_getAgenteInfo]
 GO
 
-CREATE FUNCTION Proj.[udf_getAgenteInfo] (@nif INT(9)) RETURNS TABLE
+CREATE FUNCTION Proj.[udf_getAgenteInfo] (@nif INT) RETURNS TABLE
 AS
 BEGIN 
     RETURN (SELECT * FROM Proj.[agente] AS A JOIN Proj.[Pessoa] AS P ON A.nif = P.nif) WHERE A.nif = @nif;
@@ -59,7 +59,7 @@ GO
 DROP FUNCTION Proj.[udf_isAgent]
 GO
 
-CREATE FUNCTION Proj.[udf_isAgent](@nif INT(9)) RETURNS INT
+CREATE FUNCTION Proj.[udf_isAgent](@nif INT) RETURNS INT
 AS
 BEGIN
     DECLARE @temp AS INT
@@ -120,7 +120,7 @@ END
 GO
 
 
--- get info about a specifif imovel
+-- get info about a specific imovel
 DROP FUNCTION Proj.[udf_getImobInfo]
 GO
 
@@ -251,7 +251,7 @@ END
 GO
 
 
--- get number of employyes for SPECIFIC department
+-- get number of employees for SPECIFIC department
 DROP FUNCTION Proj.[udf_getDepNumAgent]
 GO
 CREATE FUNCTION Proj.[udf_getDepNumAgent] (@depno INT) ( RETURNS TABLE
@@ -262,5 +262,10 @@ BEGIN
             WHERE @depno = A.dep_no
 END
 GO
+
+
+-- ver marcacoes num imovel especifico
+
+-- fazer mais udfs por causa dos filtros
 
 

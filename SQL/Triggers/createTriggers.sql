@@ -1,6 +1,6 @@
 -- Triggers
 
-
+-- verificar se pessoa ja existe
 DROP TRIGGER Proj.[trigger_pessoa]
 
 CREATE TRIGGER Proj.[trigger_pessoa] ON Proj.[pessoa]
@@ -22,3 +22,9 @@ BEGIN
             VALUES (@nif, @nome, @birth, @endereco, @email, @num_tlm)
 END
 GO
+
+-- ver se já existe marcacao no dia escolhido pelo utilizador
+
+-- se o interessado fizer uma proposta menor que a proposta atual pelo imovel, senao, atualizar proposta
+
+-- 

@@ -135,7 +135,7 @@ GO
 
 -- get all imoveis no mercado com um especifico tipo de negocio 
 DROP FUNCTION Proj.[udf_getImobNegocio]
-Golden
+
 CREATE FUNCTION Proj.[udf_getImobNegocio] (@nid INT) RETURNS @table TABLE(preco INT NOT NULL, localizacao VARCHAR(50) NOT NULL,
                                                                 ano_construcao INT NOT NULL, area_total INT NOT NULL, area_util INT NOT NULL)
 AS
@@ -224,7 +224,7 @@ BEGIN
     --     @nid = 1;    -- default value case if user input isn't valid
 
     -- DECLARE @preco AS INT, @localizacao AS VARCHAR(50), @ano_construcao AS INT,
-    -- @area_total AS INT, @area_util AS INT, @estacionamento BOOLEAN;
+    -- @area_total AS INT, @area_util AS INT, @estacionamento BIT;
 
     -- INSERT @table 
     RETURN (SELECT (

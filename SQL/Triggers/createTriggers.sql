@@ -27,4 +27,6 @@ GO
 
 -- se o interessado fizer uma proposta menor que a proposta atual pelo imovel, senao, atualizar proposta
 
--- 
+-- FAZER INDEXES
+
+-- passwords --->>> hashbytes n sabemos passwords, comparamos os hashs no login

@@ -1,9 +1,9 @@
 -- INSERTS
 
 -- 3 DEPARTAMENTOS que somam 80 AGENTES
-INSERT INTO imob_dept (dep_number, localizacao) values (1, 'Aveiro');
-INSERT INTO imob_dept (dep_number, localizacao) values (2, 'Coimbra');
-INSERT INTO imob_dept (dep_number, localizacao) values (3, 'Lisboa');
+INSERT INTO Proj.dept (dep_number, localizacao) values (1, 'Aveiro');
+INSERT INTO Proj.dept (dep_number, localizacao) values (2, 'Coimbra');
+INSERT INTO Proj.dept (dep_number, localizacao) values (3, 'Lisboa');
 
 
 -- INTERESSADOS com MARCACAO (sao 12)
@@ -132,9 +132,9 @@ INSERT INTO Proj.[tipoNegocio] (id, designacao) values (2, 'aluguer');
 INSERT INTO Proj.[tipoNegocio] (id, designacao) values (3, 'trespasse');
 
 -- TIPO DE IMOVEL COMERCIAL: 1-escritorio, 2-loja, 3-armazem
-INSERT INTO imob_tipo_comercial (id, designacao) values (1, 'escritorio');
-INSERT INTO imob_tipo_comercial (id, designacao) values (2, 'loja');
-INSERT INTO imob_tipo_comercial (id, designacao) values (3, 'armazem');
+INSERT INTO Proj.tipoComercial (id, designacao) values (1, 'escritorio');
+INSERT INTO Proj.tipoComercial (id, designacao) values (2, 'loja');
+INSERT INTO Proj.tipoComercial (id, designacao) values (3, 'armazem');
 
 -- 12 IMOVEIS COMERCIAIS
 INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('S2888', false, 2);

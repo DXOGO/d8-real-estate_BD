@@ -1,5 +1,5 @@
 CREATE PROCEDURE Proj.[create_agente]       -- criar agente
-@nif INT(9), @nome VARCHAR(50), @email VARCHAR(50), @morada VARCHAR(50), @num_agente INT, @dep_no INT, @num_tlm INT(9)
+@nif INT, @nome VARCHAR(50), @email VARCHAR(50), @morada VARCHAR(50), @num_agente INT, @dep_no INT, @num_tlm INT(9)
 AS 
 	DECLARE @birth DATE
 	SET @birth = SELECT GETDATE()

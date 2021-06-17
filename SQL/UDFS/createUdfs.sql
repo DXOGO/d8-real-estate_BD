@@ -1,14 +1,16 @@
+USE p5g5
+GO;
 -- UDFS
 
 
 -- ver se mail existe
-DROP FUNCTION Proj.[udf_validateEmail]
-GO
+-- DROP FUNCTION Proj.[udf_validateEmail]
+-- GO
 
 CREATE FUNCTION Proj.[udf_validateEmail](@email VARCHAR(50)) RETURNS INT
 AS
 BEGIN
-	IF EXISTS(SELECT * FROM Project.[Pessoa] AS P WHERE P.email = @email)
+	IF EXISTS(SELECT * FROM Proj.[Pessoa] AS P WHERE P.email = @email)
 		RETURN 1;
 	RETURN 0;
 END
@@ -16,10 +18,10 @@ GO
 
 
 -- ver se nif existe
-DROP FUNCTION Proj.[udf_validadeNIF]
-GO
+-- DROP FUNCTION Proj.[udf_validadeNIF]
+-- GO
 
-CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT(9)) RETURNS INT
+CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT) RETURNS INT
 AS
 BEGIN
 	DECLARE @temp AS INT

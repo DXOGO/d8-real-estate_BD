@@ -7,12 +7,12 @@ CREATE TRIGGER Proj.[trigger_pessoa] ON Proj.[pessoa]
 INSTEAD OF INSERT
 AS
 BEGIN
-    DECLARE @nif INT(9);
+    DECLARE @nif INT;
     DECLARE @nome VARCHAR(50);
     DECLARE @birth DATE;
     DECLARE @endereco VARCHAR(50);
     DECLARE @email VARCHAR(50);
-    DECLARE @num_tlm INT(9);
+    DECLARE @num_tlm INT;
     
     SELECT @nif=nif, @nome=nome, @birth=birth, @endereco=endereco, @email=email, @num_tlm=num_tlm;
     IF ((SELECT Proj.[udf_validadeNIF](@nif)) > 0)  -- existe na base de dados pessoa c esse nif
@@ -27,4 +27,6 @@ GO
 
 -- se o interessado fizer uma proposta menor que a proposta atual pelo imovel, senao, atualizar proposta
 
--- 
+-- FAZER INDEXES
+
+-- passwords --->>> hashbytes n sabemos passwords, comparamos os hashs no login

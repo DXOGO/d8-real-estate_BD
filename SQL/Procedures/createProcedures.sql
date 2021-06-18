@@ -1,5 +1,5 @@
-CREATE PROCEDURE Proj.[create_agente]       -- criar agente
-@nif INT, @nome VARCHAR(50), @email VARCHAR(50), @morada VARCHAR(50), @num_agente INT, @dep_no INT, @num_tlm INT
+CREATE PROCEDURE Proj.[cp_create_agente]       -- criar agente
+@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @endereco VARCHAR(50), @num_agente INT, @dep_no INT, @num_tlm INT
 AS 
 	insert into Proj.[pessoa] VALUES (@nif, @nome, @birth, @endereco, @email, @num_tlm)
 	insert into Proj.[agente] VALUES (@nif, @num_agente, @dep_no)
@@ -180,3 +180,4 @@ EXEC Proj.[cp_create_proprietario] (637579252, 'Perceval Buttle', '22/06/1973', 
 
 
 -- inserir mais procedures caso sejam inseridos mais departamenos, agentes, imoveis, etc...
+-- fazer transaçoes

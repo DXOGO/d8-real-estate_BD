@@ -74,23 +74,6 @@ END
 GO
 
 
--- get all imoveis no mercado
--- DROP FUNCTION Proj.[udf_getAllImob]
--- GO
-
-CREATE FUNCTION Proj.[udf_getAllImob] () RETURNS @table TABLE (preco INT NOT NULL, localizacao VARCHAR(50) NOT NULL,
-ano_construcao INT NOT NULL, area_total INT NOT NULL, area_util INT NOT NULL)
-AS
-BEGIN
-    DECLARE @preco AS INT, @localizacao AS VARCHAR(50),@ano_construcao AS INT,
-	@area_total AS INT, @area_util AS INT;
-
-    INSERT @table (SELECT preco, localizacao, ano_construcao, area_total, area_util
-                    FROM Proj.[imovel]);
-END
-GO
-
-
 -- get all imoveis no mercado numa cidade especifica
 DROP FUNCTION Proj.[udf_getCityImob]
 GO

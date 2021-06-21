@@ -8,9 +8,10 @@ CREATE TABLE Proj.[pessoa] ( -- pessoa
 	nif INT NOT NULL,
 	nome VARCHAR(50) NOT NULL,
 	birth DATE NOT NULL,
-	morada VARCHAR(50) NOT NULL,
-	email VARCHAR(50) NOT NULL,
+	endereco VARCHAR(50) NOT NULL,
+	email VARCHAR(50) UNIQUE NOT NULL,
 	num_tlm INT NOT NULL,
+	[password] VARBINARY(64) NOT NULL,
 
     PRIMARY KEY(nif)
 );
@@ -62,9 +63,10 @@ CREATE TABLE Proj.[imovel] ( -- imovel
 	imovel_codigo VARCHAR(5) NOT NULL,
 	preco INT NOT NULL CHECK (preco > 0),
 	localizacao VARCHAR(50) NOT NULL,
-	ano_construcao INT NOT NULL,
+	ano_construcao INT,
 	area_total INT NOT NULL CHECK (area_total > 0),
-	area_util INT NOT NULL CHECK (area_util <= area_total AND area_util > 0),
+	area_util INT,
+	CONSTRAINT ck_area CHECK (area_util <= area_total AND area_util > 0),
 	proprietario_nif INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
@@ -94,7 +96,7 @@ CREATE TABLE Proj.[proposta] ( -- proposta
 	interessado_nif INT NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 
-    PRIMARY KEY(proposta_cod),
+    PRIMARY KEY(proposta_codigo),
     FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif),
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo)
 );
@@ -108,7 +110,7 @@ CREATE TABLE Proj.[tipoComercial] ( -- tipo de imovel comercial
 
 CREATE TABLE Proj.[comercial] ( -- imovel comercial
 	imovel_codigo VARCHAR(5) NOT NULL,
-	estacionamento BOOLEAN NOT NULL,
+	estacionamento BIT NOT NULL,
 	tipo_comercial_id INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
@@ -125,8 +127,8 @@ CREATE TABLE Proj.[tipoHabitacional] ( -- tipo de imovel habitacional
 
 CREATE TABLE Proj.[habitacional] ( -- imovel habitacional
 	imovel_codigo VARCHAR(5) NOT NULL,
-	num_quartos INT NOT NULL,
-	wcs INT NOT NULL,
+	num_quartos INT,
+	wcs INT,
 	tipo_habitacional_id INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
@@ -149,5 +151,4 @@ CREATE TABLE Proj.[temAddOn] ( -- tem add on
     PRIMARY KEY(habitacional_codigo, add_on_id),
     FOREIGN KEY(habitacional_codigo) REFERENCES Proj.[habitacional](imovel_codigo),
     FOREIGN KEY(add_on_id) REFERENCES Proj.[addOn](id)
-
 );

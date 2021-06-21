@@ -88,15 +88,16 @@ GO
 
 CREATE PROCEDURE Proj.[cp_add_imovel]
     @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT,
-	@area_util INT, @proprietario_nif INT,  @responseMessage NVARCHAR(250) OUTPUT
+	@area_util INT, @nif INT,  @responseMessage NVARCHAR(250) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON
 	DECLARE @imovel_codigo VARCHAR(5)
 	SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
     BEGIN TRY
-        IF EXISTS(SELECT proprietario_nif FROM p5g5.[Proj].proprietario WHERE proprietario_nif=@proprietario_nif)
+        IF EXISTS(SELECT nif FROM p5g5.[Proj].pessoa WHERE nif=@nif) -- se o nif existe
             BEGIN
+				EXEC Proj.[cp_create_proprietario]
                 INSERT INTO p5g5.[Proj].imovel (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
                 VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif) 
                 SET @responseMessage='Success'
@@ -115,12 +116,12 @@ GO
 -- GO
 
 CREATE PROCEDURE Proj.[cp_add_proposta]
-    @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT, @area_util INT, @proprietario_nif INT,  @responseMessage NVARCHAR(250) OUTPUT
+    @valor INT, @interessado_nif INT, @imovel_codigo VARCHAR(5), @responseMessage NVARCHAR(250) OUTPUT
 AS
 BEGIN
     SET NOCOUNT ON
     BEGIN TRY
-        IF EXISTS(SELECT proprietario_nif FROM p5g5.[Proj].proprietario WHERE proprietario_nif=@proprietario_nif)
+        IF EXISTS(SELECT interessado_nif FROM p5g5.[Proj].interessado WHERE interessado_nif=@interessado_nif)
             BEGIN
                 INSERT INTO p5g5.[Proj].imovel (preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
                 VALUES(@preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif) 

@@ -51,7 +51,7 @@ CREATE TABLE Proj.[proprietario] ( -- proprietario
 );
 
 CREATE TABLE Proj.[marcacao] ( -- marcacao
-	data_marc DATE NOT NULL,
+	data_marc DATE NOT NULL CHECK (data_marc > GETDATE()),
 	interessado_nif INT NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 

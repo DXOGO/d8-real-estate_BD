@@ -40,7 +40,6 @@ BEGIN
 		VALUES (@data_marc, @intnif, @cod)
 	ELSE
 		RAISERROR('Impossible date', 16, 1)
-
 END
 GO
 

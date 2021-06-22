@@ -5,17 +5,16 @@ GO
 -- GO
 
 CREATE PROCEDURE Proj.[cp_create_agente]       -- criar agente
-@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @endereco VARCHAR(50), @num_agente INT, @dep_no INT, @num_tlm INT, @password VARBINARY(64), @responseMessage NVARCHAR(250) OUTPUT
+@agente_nif INT, @dep_no INT, @responseMessage NVARCHAR(250) OUTPUT
 AS 
-	DECLARE @pwd VARBINARY(64)
-	SET @pwd = (SELECT ENCRYPTBYPASSPHRASE('**********', @password))
+	DECLARE @num_agente INT
+	-- num de agente é incrementado para cada agente criado, começando no 1 até n
+	SET @num_agente = ((SELECT COUNT(*) FROM p5g5.Proj.[agente]) + 1)
 	BEGIN
 		BEGIN TRY
-			-- se a pessoa já for agente, então já existe na tabela pessoa e não é preciso inserir
-			IF NOT EXISTS(SELECT * FROM p5g5.Proj.[agente] WHERE agente_nif = @nif)
-				INSERT INTO p5g5.Proj.[pessoa] VALUES (@nif, @nome, @birth, @endereco, @email, @num_tlm, @pwd)
-			
-			INSERT INTO p5g5.Proj.[agente] VALUES (@nif, @num_agente, @dep_no)
+			-- se ainda nao está na tabela de agente, adiciona
+			IF NOT EXISTS(SELECT agente_nif FROM p5g5.Proj.[agente] WHERE agente_nif = @agente_nif)
+				INSERT INTO p5g5.Proj.[agente] VALUES (@agente_nif, @num_agente, @dep_no)
 			SET @responseMessage='Success'		
 		END TRY	
 		BEGIN CATCH
@@ -26,19 +25,15 @@ GO
 
 
 CREATE PROCEDURE Proj.[cp_create_interessado]  -- criar interessado
-@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @morada VARCHAR(50), @num_tlm INT, @password VARBINARY(64), @responseMessage NVARCHAR(250) OUTPUT
-AS 
-	DECLARE @pwd VARBINARY(64)
-	SET @pwd = (SELECT ENCRYPTBYPASSPHRASE('**********', @password))	
+@interessado_nif INT, @responseMessage NVARCHAR(250) OUTPUT
+AS 	
 	BEGIN
 		BEGIN TRY
-			-- se a pessoa já for proprietario, então já existe na tabela pessoa e não é preciso inserir
-			IF NOT EXISTS(SELECT proprietario_nif FROM p5g5.Proj.[proprietario] WHERE proprietario_nif = @nif)
-				INSERT INTO p5g5.Proj.[pessoa] VALUES (@nif, @nome, @birth, @morada, @email, @num_tlm, @pwd)
-			
-			INSERT INTO p5g5.Proj.[interessado] VALUES (@nif)
+			-- se ainda nao está na tabela de interessado, adiciona
+			IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif = @interessado_nif)
+				INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
 			SET @responseMessage='Success'		
-		END TRY	
+		END TRY
 		BEGIN CATCH
 			SET @responseMessage='Failed'
 		END CATCH
@@ -47,17 +42,16 @@ GO
 
 
 CREATE PROCEDURE Proj.[cp_create_proprietario] -- criar proprietarios
-
-@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @morada VARCHAR(50), @num_tlm INT, @agente_nif INT,  @password VARBINARY(64), @responseMessage NVARCHAR(250) OUTPUT
+@proprietario_nif INT,  @responseMessage NVARCHAR(250) OUTPUT
 AS 
-	DECLARE @pwd VARBINARY(64)
-	SET @pwd = (SELECT ENCRYPTBYPASSPHRASE('**********', @password))
+	DECLARE @agente_nif INT
+	-- select random agente para tratar do proprietario
+	SET @agente_nif = (SELECT TOP 1 agente_nif FROM p5g5.Proj.[agente] ORDER BY NEWID())
 	BEGIN
 		BEGIN TRY
-			-- se a pessoa já for proprietario, então já existe na tabela pessoa e não é preciso inserir
-			IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif = @nif)
-				INSERT INTO p5g5.Proj.[pessoa] VALUES (@nif, @nome, @birth, @morada, @email, @num_tlm, @pwd)
-			INSERT INTO p5g5.Proj.[proprietario] VALUES (@nif, @agente_nif)
+			-- se ainda nao está na tabela de proprietarios, adiciona
+			IF NOT EXISTS(SELECT proprietario_nif FROM p5g5.Proj.[proprietario] WHERE proprietario_nif = @proprietario_nif)
+				INSERT INTO p5g5.Proj.[proprietario] VALUES (@proprietario_nif, @agente_nif)
 			SET @responseMessage='Success'		
 		END TRY
 		BEGIN CATCH
@@ -65,6 +59,8 @@ AS
 		END CATCH
 	END
 GO
+
+
 
 
 CREATE PROCEDURE Proj.[cp_create_pessoa]  -- criar pessoa
@@ -86,7 +82,7 @@ GO
 -- DROP PROCEDURE Proj.[cp__add_imovel];
 -- GO
 
-CREATE PROCEDURE Proj.[cp_add_imovel]
+CREATE PROCEDURE Proj.[cp_add_imovel] -- criar imovel
     @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT,
 	@area_util INT, @nif INT,  @responseMessage NVARCHAR(250) OUTPUT
 AS
@@ -115,7 +111,7 @@ GO
 -- DROP PROCEDURE Proj.[cp__add_proposta];
 -- GO
 
-CREATE PROCEDURE Proj.[cp_add_proposta]
+CREATE PROCEDURE Proj.[cp_add_proposta] -- criar proposta
     @valor INT, @interessado_nif INT, @imovel_codigo VARCHAR(5), @responseMessage NVARCHAR(250) OUTPUT
 AS
 BEGIN
@@ -137,5 +133,6 @@ END
 GO 
 
 
--- inserir mais procedures caso sejam inseridos mais departamenos, agentes, imoveis, etc...
+
+-- inserir mais procedures caso sejam inseridos mais departamentos, agentes, imoveis, etc...
 -- fazer transaçoes

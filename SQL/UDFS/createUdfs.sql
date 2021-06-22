@@ -162,8 +162,8 @@ GO
 
 
 -- get specific type of comercial
-DROP FUNCTION Proj.[udf_getComercialInfo]
-GO
+-- DROP FUNCTION Proj.[udf_getComercialInfo]
+-- GO
 
 CREATE FUNCTION Proj.[udf_getComercialInfo] (@nid INT) RETURNS TABLE
 AS
@@ -183,14 +183,17 @@ GO
 
 
 -- get number of employees for SPECIFIC department
-DROP FUNCTION Proj.[udf_getDepNumAgent]
-GO
+-- DROP FUNCTION Proj.[udf_getDepNumAgent]
+-- GO
 
 CREATE FUNCTION Proj.[udf_getDepNumAgent] (@depno INT) RETURNS TABLE
 AS
-    RETURN (SELECT D.dep_number, D.localizacao, COUNT(*) 
-            FROM Proj.[agente] AS A JOIN Proj.[dept] AS D ON A.dep_no = D.dep_number
-            WHERE @depno = A.dep_no)
+    RETURN (SELECT D.dep_number, D.localizacao, COUNT(*) AS numAgentes 
+            FROM p5g5.Proj.[agente] AS A JOIN Proj.[dept] AS D ON A.dep_no = D.dep_number
+            WHERE @depno = A.dep_no
+			GROUP BY D.dep_number, D.localizacao
+			ORDER BY numAgentes DESC OFFSET 0 ROWS
+			)	
 GO
 
 
@@ -232,4 +235,61 @@ END
 GO
 
 
+-- recebe codigo imovel e devolve propostas para imovel especifico
+-- DROP FUNCTION Proj.[udf_getPropostas]
+-- GO
 
+CREATE FUNCTION Proj.[udf_getPropostas] (@imovel_codigo VARCHAR(5)) RETURNS TABLE
+AS
+	-- dps se tivermos tempo podemos mudar/adicionar em vez de mostrar NIF mostrar nomes
+	RETURN (SELECT P.proposta_codigo, P.valor, P.interessado_nif FROM p5g5.Proj.[imovel] AS I 
+			JOIN p5g5.Proj.[proposta] AS P ON I.imovel_codigo = P.imovel_codigo
+			WHERE I.imovel_codigo = @imovel_codigo
+	)
+GO
+
+
+-- recebe nif agente e devolve o(s) proprietario(s) que ele gere, os imoveis que eles possuem e as propostas para cada imovel
+-- DROP FUNCTION Proj.[udf_getAgenteWork]
+-- GO
+
+CREATE FUNCTION Proj.[udf_getAgenteWork] (@agente_nif INT) RETURNS TABLE
+AS
+	RETURN (SELECT P.proprietario_nif, I.imovel_codigo, I.preco, PR.proposta_codigo, PR.interessado_nif, PR.valor
+			FROM p5g5.Proj.[agente] AS A -- ligar agente ao proprietario
+			JOIN p5g5.Proj.[proprietario] AS P ON A.agente_nif = P.agente_nif
+			JOIN p5g5.Proj.[imovel] AS I ON P.proprietario_nif = I.proprietario_nif -- ligar agente e propritario ao imovel
+			JOIN p5g5.Proj.[proposta] AS PR ON I.imovel_codigo = PR.imovel_codigo	-- ligar imovel as propostas
+			WHERE A.agente_nif = @agente_nif
+	)
+GO
+
+
+-- recebe proprietario e devolve o agente responsavel, o(s) imovel(s) q ele possui e todas as suas marcacoes bem como o interessado q as fez
+-- DROP FUNCTION Proj.[udf_getMarcProp]
+-- GO
+
+CREATE FUNCTION Proj.[udf_getMarcProp] (@proprietario_nif INT) RETURNS TABLE
+AS
+	RETURN (SELECT P.agente_nif, I.imovel_codigo, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, M.data_marc, M.interessado_nif
+				FROM p5g5.Proj.[proprietario] AS P JOIN p5g5.Proj.[imovel] AS I ON P.proprietario_nif = I.proprietario_nif
+				JOIN p5g5.Proj.[marcacao] AS M ON I.imovel_codigo = M.imovel_codigo
+				WHERE P.proprietario_nif = @proprietario_nif
+	)
+GO
+
+
+-- recebe agente e devolve imovel(s) de cada proprietario com quem trabalha e todas as suas marcacoes 
+-- DROP FUNCTION Proj.[udf_getMarcAgente]
+-- GO
+
+CREATE FUNCTION Proj.[udf_getMarcAgente] (@agente_nif INT) RETURNS TABLE
+AS
+	RETURN (SELECT P.proprietario_nif, I.imovel_codigo, M.interessado_nif, M.data_marc
+			FROM p5g5.Proj.[agente] AS A -- ligar agente ao proprietario
+			JOIN p5g5.Proj.[proprietario] AS P ON A.agente_nif = P.agente_nif
+			JOIN p5g5.Proj.[imovel] AS I ON P.proprietario_nif = I.proprietario_nif -- ligar agente e propritario ao imovel
+			JOIN p5g5.Proj.[marcacao] AS M ON I.imovel_codigo = M.imovel_codigo -- ligar imovel a marcacao
+			WHERE A.agente_nif = @agente_nif
+	)
+GO

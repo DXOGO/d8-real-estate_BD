@@ -26,8 +26,9 @@ CREATE TABLE Proj.[dept] ( -- departamento
 
 CREATE TABLE Proj.[agente] ( -- agente
 	agente_nif INT NOT NULL,
-	num_agente INT CHECK (num_agente > 0) NOT NULL,
+	num_agente INT NOT NULL,
 	dep_no INT NOT NULL,
+	CONSTRAINT ck_dep CHECK (dep_no > 0 AND dep_no < (SELECT COUNT(*) FROM p5g5.Proj.[dept])
 
 	PRIMARY KEY(agente_nif),
     FOREIGN KEY(agente_nif) REFERENCES Proj.[pessoa](nif),

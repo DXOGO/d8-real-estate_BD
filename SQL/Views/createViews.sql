@@ -1,6 +1,6 @@
 -- get all imoveis no mercado
-DROP VIEW Proj.[view_getAllImob]
-GO
+-- DROP VIEW Proj.[view_getAllImob]
+-- GO
 
 CREATE VIEW Proj.[view_getAllImob]
 AS
@@ -9,8 +9,8 @@ AS
 GO
 
 -- get all imoveis de habitaçao
-DROP VIEW Proj.[udf_getHabitacional]
-GO
+-- DROP VIEW Proj.[udf_getHabitacional]
+-- GO
 
 CREATE VIEW Proj.[view_getHabitacional]
 AS
@@ -20,8 +20,8 @@ AS
 GO
 
 -- get all imoveis de comercial
-DROP VIEW Proj.[view_getComercial]
-GO
+-- DROP VIEW Proj.[view_getComercial]
+-- GO
 
 CREATE VIEW Proj.[view_getComercial]
 AS
@@ -31,8 +31,8 @@ AS
 GO
 
 -- get number of employees per department
-DROP VIEW Proj.[view_getDepNumAgent]
-GO
+-- DROP VIEW Proj.[view_getDepNumAgent]
+-- GO
 
 CREATE VIEW Proj.[view_getDepNumAgent]
 AS
@@ -41,10 +41,23 @@ AS
 GO
 
 
+
+-- mostrar todos os imoveis vendidos 
+-- DROP VIEW Proj.[view_imoveisVendidos]
+-- GO
+
+CREATE VIEW Proj.[view_imoveisVendidos]
+AS
+	SELECT V.imovel_codigo, V.preco, V.localizacao, V.ano_construcao, V.area_total,
+				V.area_util, V.proprietario_nif, P.interessado_nif, P.valor
+	FROM Proj.[vendido] AS V JOIN Proj.[proposta] AS P ON V.proposta_codigo = P.proposta_codigo
+GO
+
+
 -- criar codigo de imovel
 CREATE VIEW Proj.[view_getImobRand]
 AS
-SELECT (CONCAT (CHAR(CAST((90-65)*RAND() + 65 as integer)), FLOOR(RAND()*(10000-1000)+1000))) AS Value
+SELECT (CONCAT (CHAR(CAST((90-65)*RAND() + 65 AS INTEREGER)), FLOOR(RAND()*(10000-1000)+1000))) AS Value
 
 GO
 -- criar codigo de proposta
@@ -53,4 +66,11 @@ AS
 SELECT (CONCAT (CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)), CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)), 
 			CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)), CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)), 
 			CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)))) AS Value
+GO
+
+-- criar referencia 
+CREATE VIEW Proj.[view_getRefRand]
+AS
+SELECT (CONCAT (CHAR(CAST((90-65)*RAND() + 65 AS INTEGER)), 
+			FLOOR(RAND()*(9999-1000)+1000), FLOOR(RAND()*(9999-1000)+1000))) AS Value
 GO

@@ -28,25 +28,68 @@ CREATE TRIGGER Proj.[trigger_marcacao] ON Proj.[marcacao]
 INSTEAD OF INSERT
 AS
 BEGIN
-	DECLARE @data_marc DATE, @interessado_nif INT, @imovel_codigo VARCHAR(5), @now DATE
+	DECLARE @data_marc DATE, @interessado_nif INT, @imovel_codigo VARCHAR(5), @now DATE, @responseMessage NVARCHAR(250)
 	SET @now = CAST(DATEADD(DAY, 1, GETDATE()) AS DATE)
+	SET @responseMessage='Success'
 
 	SELECT @data_marc=data_marc, @interessado_nif=interessado_nif, @imovel_codigo=imovel_codigo FROM INSERTED;
-	-- se imovel n existe
-	IF NOT EXISTS (SELECT imovel_codigo FROM Proj.[imovel] WHERE @imovel_codigo=imovel_codigo)
-		RAISERROR('Imovel doesnt exist', 16, 1)
-	-- se já ha marcacao p esse imovel nesse dia
-	ELSE IF (SELECT COUNT(*) FROM p5g5.Proj.[marcacao] JOIN p5g5.Proj.[imovel] AS I ON I.imovel_codigo= @imovel_codigo WHERE data_marc=@data_marc) = 1
-		RAISERROR('Imovel already has appointment that day', 16, 1)
-	-- senao, schedule para o dia
-	ELSE IF (SELECT data_marc FROM p5g5.Proj.[marcacao] WHERE @data_marc=data_marc) > @now
-		INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
-		VALUES (@data_marc, @interessado_nif, @imovel_codigo)
+	-- checkar se data é valida
+	IF NOT EXISTS(SELECT data_marc FROM p5g5.Proj.[marcacao] JOIN p5g5.Proj.[imovel] AS I ON I.imovel_codigo= @imovel_codigo WHERE data_marc=@data_marc)
+	BEGIN
+		-- sverificar se a data é maior q agora
+		IF @data_marc > @now
+		BEGIN
+			-- criar interessado se ele ainda n ta na tablea
+		IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif = @interessado_nif)
+			EXEC Proj.[cp_create_interessado] @interessado_nif, @responseMessage OUTPUT
+
+			IF @responseMessage = 'Success'
+				INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
+							VALUES (@data_marc, @interessado_nif, @imovel_codigo)
+				SET @responseMessage='Success'
+		END
+		ELSE
+		RAISERROR('Please select a future date', 16, 1)
+	END
 	ELSE
 		RAISERROR('Impossible date', 16, 1)
 END
 GO
 
+
+--CREATE TRIGGER Proj.[trigger_addProprietario] ON Proj.[imovel]
+--INSTEAD OF INSERT
+--AS
+--BEGIN
+--	DECLARE @proprietario_nif INT, @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT, @area_util INT, @responseMessage NVARCHAR(250)
+--	SET @responseMessage='Success'
+--	SELECT @proprietario_nif=proprietario_nif FROM INSERTED;
+
+--	IF NOT EXISTS (SELECT * FROM p5g5.Proj.[proprietario] WHERE proprietario_nif = @proprietario_nif)
+--		EXEC Proj.[cp_create_proprietario] @proprietario_nif, @responseMessage OUTPUT
+--	IF @responseMessage = 'Success'
+--		SELECT @preco=preco, @localizacao=localizacao, @ano_construcao=ano_construcao, @area_total=area_total, @area_util=area_util FROM INSERTED
+--		INSERT INTO p5g5.[Proj].imovel (preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
+--               VALUES(@preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+--        SET @responseMessage='Success'
+--END
+--GO
+
+--CREATE TRIGGER Proj.[trigger_addInteressado] ON Proj.[proposta]
+--INSTEAD OF INSERT
+--AS
+--BEGIN
+--	DECLARE @interessado_nif INT, @valor INT, @imovel_codigo VARCHAR(5), @responseMessage NVARCHAR(250)
+--	SET @responseMessage='Success'
+--	SELECT @interessado_nif = interessado_nif FROM INSERTED;
+
+--	IF NOT EXISTS (SELECT * FROM p5g5.Proj.[interessado] WHERE interessado_nif = @interessado_nif)
+--		EXEC Proj.[cp_create_interessado] @interessado_nif, @responseMessage OUTPUT
+--	IF @responseMessage = 'Success'
+--		SELECT @valor=valor, @imovel_codigo=imovel_codigo FROM INSERTED
+--		EXEC Proj.[cp_add_proposta] @valor, @imovel_codigo, @interessado_nif, @responseMessage OUTPUT
+--END
+--GO
 
 -- FAZER MAIS TRIGGERS FDSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA 
 

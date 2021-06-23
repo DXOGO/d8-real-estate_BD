@@ -52,7 +52,7 @@ CREATE TABLE Proj.[proprietario] ( -- proprietario
 );
 
 CREATE TABLE Proj.[marcacao] ( -- marcacao
-	data_marc DATE NOT NULL CHECK (data_marc > GETDATE()),
+	data_marc DATE NOT NULL,
 	interessado_nif INT NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 
@@ -67,12 +67,14 @@ CREATE TABLE Proj.[imovel] ( -- imovel
 	ano_construcao INT,
 	area_total INT NOT NULL CHECK (area_total > 0),
 	area_util INT,
-	CONSTRAINT ck_area CHECK (area_util <= area_total AND area_util > 0),
+	-- CONSTRAINT ck_area CHECK (area_util <= area_total AND area_util > 0),
 	proprietario_nif INT NOT NULL,
 
     PRIMARY KEY(imovel_codigo),
     FOREIGN KEY(proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif)
 );
+
+-- ALTER TABLE Proj.[imovel] DROP CONSTRAINT ck_area
 
 CREATE TABLE Proj.[tipoNegocio] ( -- tipo de negocio
 	id INT NOT NULL,
@@ -100,6 +102,21 @@ CREATE TABLE Proj.[proposta] ( -- proposta
     PRIMARY KEY(proposta_codigo),
     FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif),
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo)
+);
+
+CREATE TABLE Proj.[vendido] ( -- vendido
+	imovel_codigo VARCHAR(5) NOT NULL,
+	preco INT NOT NULL CHECK (preco > 0),
+	localizacao VARCHAR(50) NOT NULL,
+	ano_construcao INT,
+	area_total INT NOT NULL CHECK (area_total > 0),
+	area_util INT,
+	proprietario_nif INT NOT NULL,
+	proposta_codigo VARCHAR(5) NOT NULL,
+
+    PRIMARY KEY(imovel_codigo),
+    FOREIGN KEY(proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif),
+	FOREIGN KEY(proposta_codigo) REFERENCES Proj.[proposta](proposta_codigo)
 );
 
 CREATE TABLE Proj.[tipoComercial] ( -- tipo de imovel comercial

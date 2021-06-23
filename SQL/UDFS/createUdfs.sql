@@ -141,8 +141,8 @@ GO
 
 
 -- get specific type of habitaçao
-DROP FUNCTION Proj.[udf_getHabitacionalInfo]
-GO
+-- DROP FUNCTION Proj.[udf_getHabitacionalInfo]
+-- GO
 
 CREATE FUNCTION Proj.[udf_getHabitacionalInfo] (@nid INT) RETURNS TABLE
 AS 
@@ -201,7 +201,7 @@ GO
 -- DROP FUNCTION Proj.[udf_createImovelCode]
 -- GO
 
-CREATE FUNCTION Proj.[udf_createImovelCode] () RETURNS VARCHAR
+CREATE FUNCTION Proj.[udf_createImovelCode] () RETURNS VARCHAR(5)
 AS
 BEGIN
 	DECLARE @temp VARCHAR(5)
@@ -220,7 +220,7 @@ GO
 -- DROP FUNCTION Proj.[udf_createPropostaCode]
 -- GO
 
-CREATE FUNCTION Proj.[udf_createPropostaCode] () RETURNS VARCHAR
+CREATE FUNCTION Proj.[udf_createPropostaCode] () RETURNS VARCHAR(5)
 AS
 BEGIN
 	DECLARE @temp VARCHAR(5)
@@ -229,6 +229,25 @@ BEGIN
 	WHILE EXISTS (SELECT proposta_codigo FROM p5g5.Proj.[proposta] WHERE proposta_codigo = @temp)
 		BEGIN
 			SET @temp = (SELECT Value FROM p5g5.Proj.[view_getPropRand])
+		END
+	RETURN @temp
+END
+GO
+
+
+-- create proposta code
+-- DROP FUNCTION Proj.[udf_createRefCode]
+-- GO
+
+CREATE FUNCTION Proj.[udf_createRefCode] () RETURNS VARCHAR(9)
+AS
+BEGIN
+	DECLARE @temp VARCHAR(9)
+	SET @temp = (SELECT Value FROM p5g5.Proj.[view_getRefRand])
+
+	WHILE EXISTS (SELECT referencia FROM p5g5.Proj.[negocio] WHERE referencia = @temp)
+		BEGIN
+			SET @temp = (SELECT Value FROM p5g5.Proj.[view_getRefRand])
 		END
 	RETURN @temp
 END
@@ -293,3 +312,35 @@ AS
 			WHERE A.agente_nif = @agente_nif
 	)
 GO
+
+
+CREATE FUNCTION Proj.[udf_getImobTypes] () 
+	RETURNS @table TABLE (
+		tc_id INT, th_id INT, preco INT, localizacao VARCHAR(50), ano_construcao INT, area_total INT, area_util INT
+	)
+AS
+BEGIN
+	DECLARE @table TABLE
+	SET @table =
+		(SELECT TC.designacao AS comercial_d, TH.designacao AS habitacional_d, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util 
+			FROM p5g5.Proj.[imovel] AS I 
+			LEFT JOIN p5g5.Proj.[comercial] AS C ON I.imovel_codigo = C.imovel_codigo
+			LEFT JOIN p5g5.Proj.[habitacional] AS H ON I.imovel_codigo = H.imovel_codigo
+			LEFT JOIN p5g5.Proj.[tipoComercial] AS TC ON C.tipo_comercial_id = TC.id
+			LEFT JOIN p5g5.Proj.[tipoHabitacional] AS TH ON H.tipo_habitacional_id = TH.id
+		)
+
+END
+GO
+
+-- para cada agente mostrar lista dos seus imoveis vendidos
+-- DROP FUNCTION Proj.[udf_getImobVendidos]
+-- GO
+
+--CREATE FUNCTION Proj.[udf_getImobVendidos] (@agente_nif INT) RETURNS TABLE
+--GO
+
+-- function para dar update da tabela da proposta qd insere uma
+
+
+-- function para gerar referencia aleatoria

@@ -5,3 +5,5 @@ Foi criada uma base de dados de uma imobiliária e interface gŕafica para uso d
 ## Authors: 
 Diogo Cruz: @DXOGO  
 Artur Romão: @artur-romao
+
+## Updates desde 24/07/2021

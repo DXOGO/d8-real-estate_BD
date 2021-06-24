@@ -141,7 +141,7 @@ GO
 
 
 -- get specific type of habitaçao
--- DROP FUNCTION Proj.[udf_getHabitacionalInfo]
+--DROP FUNCTION Proj.[udf_getHabitacionalInfo]
 -- GO
 
 CREATE FUNCTION Proj.[udf_getHabitacionalInfo] (@nid INT) RETURNS TABLE
@@ -153,9 +153,9 @@ AS
     -- @area_total AS INT, @area_util AS INT, @estacionamento BOOLEAN;
 
     -- INSERT @table 
-    RETURN (SELECT I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, H.num_quartos, H.wcs
+    RETURN (SELECT TH.designacao, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, H.num_quartos, H.wcs
             FROM Proj.[imovel] AS I JOIN Proj.[habitacional] AS H ON I.imovel_codigo = H.imovel_codigo
-            JOIN Proj.[tipoHabitacional] AS TH ON H.tipo_negocio_id = TH.id
+            JOIN Proj.[tipoHabitacional] AS TH ON H.tipo_habitacional_id = TH.id
                     WHERE TH.id = @nid)
     -- RETURN @table
 GO
@@ -174,7 +174,7 @@ AS
     -- @area_total AS INT, @area_util AS INT, @estacionamento BOOLEAN;
 
     -- INSERT @table 
-    RETURN (SELECT I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, C.estacionamento
+    RETURN (SELECT TC.designacao, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, C.estacionamento
             FROM Proj.[imovel] AS I JOIN Proj.[comercial] AS C ON I.imovel_codigo = C.imovel_codigo
             JOIN Proj.[tipoComercial] AS TC ON C.tipo_comercial_id = TC.id
             WHERE TC.id = @nid)     
@@ -254,6 +254,19 @@ END
 GO
 
 
+-- devolve codigo de imovel especifico
+CREATE FUNCTION Proj.[udf_getImobCode] (@proprietario_nif INT, @localizacao VARCHAR(50)) RETURNS VARCHAR(5)
+AS
+BEGIN
+	DECLARE @imovel_codigo VARCHAR(5)
+	SET @imovel_codigo = (SELECT imovel_codigo FROM p5g5.Proj.[imovel] 
+		WHERE proprietario_nif=@proprietario_nif AND localizacao=@localizacao)
+	
+	RETURN @imovel_codigo
+END
+GO
+
+
 -- recebe codigo imovel e devolve propostas para imovel especifico
 -- DROP FUNCTION Proj.[udf_getPropostas]
 -- GO
@@ -314,6 +327,10 @@ AS
 GO
 
 
+-- retorna tabela tp imovel mas com informacao tmb do tipo de imovel q é (entre comerciais e habitacionais)
+-- DROP FUNCTION Proj.[udf_getImobTypes]
+-- GO
+
 CREATE FUNCTION Proj.[udf_getImobTypes] () 
 	RETURNS @table TABLE (
 		tc_id INT, th_id INT, preco INT, localizacao VARCHAR(50), ano_construcao INT, area_total INT, area_util INT
@@ -329,6 +346,8 @@ BEGIN
 			LEFT JOIN p5g5.Proj.[tipoComercial] AS TC ON C.tipo_comercial_id = TC.id
 			LEFT JOIN p5g5.Proj.[tipoHabitacional] AS TH ON H.tipo_habitacional_id = TH.id
 		)
+		-- NAO ESTA COMPLETA E NEM CORRE (FALTA CURSOR ACHO EU)
+
 
 END
 GO
@@ -337,10 +356,20 @@ GO
 -- DROP FUNCTION Proj.[udf_getImobVendidos]
 -- GO
 
---CREATE FUNCTION Proj.[udf_getImobVendidos] (@agente_nif INT) RETURNS TABLE
---GO
 
--- function para dar update da tabela da proposta qd insere uma
+-- NAO CORRER
+CREATE FUNCTION Proj.[esti8] (@gordo VARCHAR(5)) RETURNS VARCHAR(50)
+AS 
+BEGIN
+    DECLARE @tipo_imovel VARCHAR(50)
+    IF EXISTS (SELECT * FROM proj.[habitacional] WHERE imovel_codigo = @gordo)
+    BEGIN    
+        SET @tipo_imovel = 'habitacional'
+    END
 
-
--- function para gerar referencia aleatoria
+    IF EXISTS (SELECT * FROM proj.[comercial] WHERE imovel_codigo = @gordo)
+    BEGIN    
+        SET @tipo_imovel = 'comercial'
+    END
+    RETURN @tipo_imovel
+END

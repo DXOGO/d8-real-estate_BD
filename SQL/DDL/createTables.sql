@@ -74,17 +74,36 @@ CREATE TABLE Proj.[imovel] ( -- imovel
     FOREIGN KEY(proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif)
 );
 
+
+CREATE TABLE Proj.[vendido] ( -- vendido
+	v_imovel_codigo VARCHAR(5) NOT NULL,
+	v_preco INT NOT NULL,
+	v_localizacao VARCHAR(50) NOT NULL,
+	v_ano_construcao INT,
+	v_area_total INT NOT NULL,
+	v_area_util INT,
+	-- CONSTRAINT ck_area CHECK (area_util <= area_total AND area_util > 0),
+	v_proprietario_nif INT NOT NULL,
+	v_proposta_codigo VARCHAR(5) NOT NULL,
+	v_valor INT NOT NULL,
+	v_interessado_nif INT NOT NULL,
+
+    PRIMARY KEY(v_imovel_codigo),
+    FOREIGN KEY(v_proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif),
+);
+
+
 -- ALTER TABLE Proj.[imovel] DROP CONSTRAINT ck_area
 
 CREATE TABLE Proj.[tipoNegocio] ( -- tipo de negocio
 	id INT NOT NULL,
-	designacao VARCHAR(50) NOT NULL,
+	designacao_negocio VARCHAR(50) NOT NULL,
 
     PRIMARY KEY(id)
 );
 
 CREATE TABLE Proj.[negocio] ( -- negocio
-	referencia VARCHAR NOT NULL,
+	referencia VARCHAR(9) NOT NULL,
 	imovel_codigo VARCHAR(5) NOT NULL,
 	tipo_negocio_id INT NOT NULL
 
@@ -92,6 +111,7 @@ CREATE TABLE Proj.[negocio] ( -- negocio
     FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),
     FOREIGN KEY(tipo_negocio_id) REFERENCES Proj.[tipoNegocio](id)
 );
+
 
 CREATE TABLE Proj.[proposta] ( -- proposta
 	proposta_codigo VARCHAR(5) NOT NULL,
@@ -121,7 +141,7 @@ CREATE TABLE Proj.[vendido] ( -- vendido
 
 CREATE TABLE Proj.[tipoComercial] ( -- tipo de imovel comercial
 	id INT NOT NULL,
-	designacao VARCHAR(50) NOT NULL,
+	designacao_comercial VARCHAR(50) NOT NULL,
 
 	PRIMARY KEY(id)
 );
@@ -138,7 +158,7 @@ CREATE TABLE Proj.[comercial] ( -- imovel comercial
 
 CREATE TABLE Proj.[tipoHabitacional] ( -- tipo de imovel habitacional
 	id INT NOT NULL,
-	designacao VARCHAR(50) NOT NULL,
+	designacao_habitacional VARCHAR(50) NOT NULL,
 
 	PRIMARY KEY(id)
 );
@@ -156,7 +176,7 @@ CREATE TABLE Proj.[habitacional] ( -- imovel habitacional
 
 CREATE TABLE Proj.[addOn] ( -- add on
 	id INT NOT NULL,
-	designacao VARCHAR(50) NOT NULL,
+	designacao_addon VARCHAR(50) NOT NULL,
 
     PRIMARY KEY(id)
 );

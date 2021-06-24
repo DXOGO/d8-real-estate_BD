@@ -6,7 +6,7 @@ GO
 
 CREATE PROCEDURE Proj.[cp_create_agente]       -- criar agente
 @agente_nif INT, @dep_no INT, @responseMessage NVARCHAR(250) OUTPUT
-AS 
+AS	
 	DECLARE @num_agente INT
 	-- num de agente é incrementado para cada agente criado, começando no 1 até n
 	SET @num_agente = ((SELECT COUNT(*) FROM p5g5.Proj.[agente]) + 1)
@@ -88,7 +88,7 @@ CREATE PROCEDURE Proj.[cp_add_imovel] -- criar imovel e adicionar proprietario
 AS
 BEGIN
     SET NOCOUNT ON
-	DECLARE @imovel_codigo VARCHAR(5)
+	DECLARE @imovel_codigo VARCHAR(5) 
 	SET @responseMessage='Success'
 	SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
    BEGIN TRY
@@ -97,9 +97,10 @@ BEGIN
 				IF NOT EXISTS(SELECT proprietario_nif FROM p5g5.Proj.[proprietario] WHERE proprietario_nif=@proprietario_nif) -- se o nif_prop n existe
 					EXEC Proj.[cp_create_proprietario] @proprietario_nif, @responseMessage OUTPUT
                 
-				INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
-                VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
-                SET @responseMessage='Success'
+				IF NOT EXISTS(SELECT localizacao FROM p5g5.Proj.[imovel] WHERE localizacao=@localizacao)
+					INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
+					VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+					SET @responseMessage='Success'
             END
         ELSE
             SET @responseMessage='Permition denied'
@@ -107,6 +108,47 @@ BEGIN
     BEGIN CATCH
         SET @responseMessage='Failed'
     END CATCH
+
+	--RETURN @imovel_codigo
+END
+GO 
+
+CREATE PROCEDURE Proj.[cp_add_imovel_habitacional] -- criar e adicionar a imovel, habitacional, proprietario e negocio
+    @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT, @area_util INT, @proprietario_nif INT, 
+	@num_quartos INT, @wcs INT, @habitacional_id INT, @negocio_id INT, @quantidade INT,  @responseMessage NVARCHAR(250) OUTPUT
+AS
+BEGIN
+	-- add imovel e proprietario
+	EXEC Proj.[cp_add_imovel] @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif, @responseMessage
+	
+	DECLARE @imovel_codigo VARCHAR(5)
+	SET @imovel_codigo = (SELECT p5g5.Proj.[udf_getImobCode](@proprietario_nif, @localizacao))
+
+	-- add habitacional
+	INSERT INTO p5g5.Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id)
+	VALUES(@imovel_codigo, @num_quartos, @wcs, @habitacional_id)
+	-- add negocio
+	EXEC Proj.[cp_add_negocio] @imovel_codigo, @negocio_id, @responseMessage
+END
+GO 
+
+
+CREATE PROCEDURE Proj.[cp_add_imovel_comercial] -- criar e adicionar a imovel, comercial, proprietario e negocio
+    @preco INT, @localizacao VARCHAR(50), @ano_construcao INT, @area_total INT, @area_util INT, @proprietario_nif INT, 
+	@estacionamento BIT, @comercial_id INT, @negocio_id INT,  @responseMessage NVARCHAR(250) OUTPUT
+AS
+BEGIN
+	-- add imovel e proprietario
+	EXEC Proj.[cp_add_imovel] @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif, @responseMessage
+	
+	DECLARE @imovel_codigo VARCHAR(5)
+	SET @imovel_codigo = (SELECT p5g5.Proj.[udf_getImobCode](@proprietario_nif, @localizacao))
+
+	-- add comercial
+	INSERT INTO p5g5.Proj.comercial (imovel_codigo, estacionamento, tipo_comercial_id)
+	VALUES(@imovel_codigo, @estacionamento, @comercial_id)
+	-- add negocio
+	EXEC Proj.[cp_add_negocio] @imovel_codigo, @negocio_id, @responseMessage
 END
 GO 
 
@@ -179,20 +221,14 @@ CREATE PROCEDURE Proj.[cp_add_negocio] -- criar marcacao e adiciona interessado
 	@imovel_codigo VARCHAR(5), @tipo_negocio_id INT, @responseMessage NVARCHAR(250) OUTPUT
 AS
 BEGIN
-	SET ANSI_WARNINGS OFF;
     SET NOCOUNT ON
 	DECLARE @referencia VARCHAR(9)
 	SET @referencia = (SELECT p5g5.Proj.[udf_createRefCode]())
 	SET @responseMessage='Success'
 	BEGIN TRY
 		IF EXISTS(SELECT imovel_codigo FROM p5g5.Proj.[imovel] WHERE imovel_codigo=@imovel_codigo) -- se o imovel existe
-            BEGIN
-			-- ERRADO -- FAZER VERIFICAÇAO Q SÓ HA 1 TIPO NEGOCIO P CADA IMOVEL
-			-- TENTAR PERCEBER PQ É Q O REF CORTA OS ULTIMOS 4 NUMEROS
-				IF (SELECT N.tipo_negocio_id FROM p5g5.Proj.[negocio] AS N 
-					JOIN p5g5.Proj.[imovel] AS I ON N.imovel_codigo=I.imovel_codigo 
-							WHERE I.imovel_codigo=@imovel_codigo) < 1
-
+			BEGIN
+				IF NOT EXISTS(SELECT imovel_codigo FROM p5g5.Proj.[negocio] WHERE imovel_codigo=@imovel_codigo)
 					INSERT INTO p5g5.Proj.[negocio] (referencia, imovel_codigo, tipo_negocio_id)
 					VALUES(@referencia, @imovel_codigo, @tipo_negocio_id) 
 					SET @responseMessage='Success'	
@@ -203,14 +239,53 @@ BEGIN
     BEGIN CATCH
         SET @responseMessage='Failed'
     END CATCH
-	SET ANSI_WARNINGS ON;
 END
 GO
 
 -- dps da venda do imovel DEL da tabela [imovel] e adiciona à tabela [vendido]
+--DROP PROCEDURE Proj.cp__update_imovel;
+--GO
 
+CREATE PROCEDURE Proj.[cp_update_imovel]
+	@v_imovel_codigo VARCHAR(5)
+AS
+BEGIN
+	DECLARE @v_preco INT, @v_localizacao VARCHAR(50), @v_ano_construcao INT, @v_area_total INT, 
+		@v_area_util INT, @v_proprietario_nif INT, @v_proposta_codigo VARCHAR(5), @v_valor INT, @v_interessado_nif INT
 
+	IF EXISTS(SELECT P.imovel_codigo FROM p5g5.Proj.[imovel] AS I JOIN p5g5.Proj.[proposta] AS P ON I.imovel_codigo=P.imovel_codigo
+				WHERE P.imovel_codigo=@v_imovel_codigo) --se existe imovel
 
+		--IF EXISTS (SELECT imovel_codigo FROM p5g5.Proj.[proposta] WHERE imovel_codigo=@v_imovel_codigo) -- se existe proposta
+			-- SET @v_proposta_codigo = (SELECT proposta_codigo FROM p5g5.Proj.[proposta] WHERE imovel_codigo=@imovel_codigo)
+			
+			SELECT @v_preco=preco, @v_localizacao=localizacao, @v_ano_construcao=ano_construcao, 
+						@v_area_total=area_total, @v_area_util=area_util, @v_proprietario_nif=proprietario_nif
+			FROM p5g5.Proj.[imovel] WHERE imovel_codigo=@v_imovel_codigo
+
+			SELECT @v_proposta_codigo=proposta_codigo, @v_valor=valor, @v_interessado_nif=interessado_nif
+			FROM p5g5.Proj.[proposta] WHERE imovel_codigo=@v_imovel_codigo
+
+			INSERT INTO p5g5.Proj.[vendido] (v_imovel_codigo, v_preco, v_localizacao, v_ano_construcao, v_area_total, v_area_util, v_proprietario_nif, v_proposta_codigo, v_valor, v_interessado_nif)
+			VALUES(@v_imovel_codigo, @v_preco, @v_localizacao, @v_ano_construcao, @v_area_total, @v_area_util, @v_proprietario_nif, @v_proposta_codigo, @v_valor, @v_interessado_nif)
+
+			EXEC Proj.[delete_imovel] @v_imovel_codigo
+END
+GO
+
+CREATE PROCEDURE Proj.[delete_imovel]
+	@imovel_codigo VARCHAR(5)
+AS
+BEGIN TRANSACTION
+	DELETE FROM Proj.temAddOn WHERE habitacional_codigo=@imovel_codigo
+	DELETE FROM Proj.habitacional  WHERE imovel_codigo=@imovel_codigo
+	DELETE FROM Proj.comercial WHERE imovel_codigo=@imovel_codigo
+	DELETE FROM Proj.proposta WHERE imovel_codigo=@imovel_codigo
+	DELETE FROM Proj.marcacao WHERE imovel_codigo=@imovel_codigo
+	DELETE FROM Proj.negocio WHERE imovel_codigo=@imovel_codigo
+	DELETE FROM Proj.imovel WHERE imovel_codigo=@imovel_codigo
+COMMIT
+GO
 
 -- inserir mais procedures caso sejam inseridos mais departamentos, agentes, imoveis, etc...
 -- fazer transaçoes

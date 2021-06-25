@@ -3,7 +3,7 @@
         Dim imovel_selecionado = Comprar.Selected_Imovel
         TipoImovel.Font = New Font(TipoImovel.Font, FontStyle.Bold)
         TipoImovel.Text = imovel_selecionado.tipo_imovel_especifico
-        'TipoNegocio.Text = imovel_selecionado.tipo_negocio
+        TipoNegocio.Text = imovel_selecionado.tipo_negocio
         PrecoTextBox.Text = imovel_selecionado.preco
         LocalizacaoTextBox.Text = imovel_selecionado.localizacao
         AreaTotalTextBox.Text = imovel_selecionado.area_total

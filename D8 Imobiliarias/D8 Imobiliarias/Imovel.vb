@@ -1,7 +1,7 @@
 ﻿Public Class Imovel
     Private _tipo_imovel As String
     Private _tipo_imovel_especifico As String
-    'Private _tipo_negocio As String
+    Private _tipo_negocio As String
     Private _imovel_codigo As String
     Private _preco As Integer
     Private _localizacao As String
@@ -28,14 +28,14 @@
         End Set
     End Property
 
-    'Property tipo_negocio() As String
-    'Get
-    'Return _tipo_negocio
-    'End Get
-    'Set(ByVal value As String)
-    '       _tipo_negocio = value
-    'End Set
-    'End Property
+    Property tipo_negocio() As String
+        Get
+            Return _tipo_negocio
+        End Get
+        Set(ByVal value As String)
+            _tipo_negocio = value
+        End Set
+    End Property
 
     Property imovel_codigo() As String
         Get

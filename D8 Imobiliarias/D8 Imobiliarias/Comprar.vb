@@ -112,18 +112,24 @@ Public Class Comprar
                                "uid = " + userName + ";" +
                                "password = " + userPass)
 
-        Dim CMD = "SELECT * FROM (SELECT [imovel].imovel_codigo, preco, localizacao, ano_construcao, area_total, designacao_comercial AS designacao
+        Dim CMD = "	SELECT * FROM (SELECT [imovel].imovel_codigo, preco, localizacao, ano_construcao, area_total, designacao_comercial AS designacao
             FROM Proj.[imovel] Join Proj.[comercial] ON [imovel].imovel_codigo = [comercial].imovel_codigo
             Join Proj.[tipoComercial] ON [comercial].tipo_comercial_id = [tipoComercial].id 
 			UNION
 			SELECT [imovel].imovel_codigo, preco, localizacao, ano_construcao, area_total, designacao_habitacional AS designacao
 			FROM Proj.[imovel] Join Proj.[habitacional] ON [imovel].imovel_codigo = [habitacional].imovel_codigo
-            Join Proj.[tipoHabitacional] ON [habitacional].tipo_habitacional_id = [tipoHabitacional].id) AS legordo"
+            Join Proj.[tipoHabitacional] ON [habitacional].tipo_habitacional_id = [tipoHabitacional].id) AS legordo
+			Join
+			(SELECT [negocio].imovel_codigo AS codigo, [tipoNegocio].designacao_negocio FROM Proj.[negocio] Join Proj.[tipoNegocio] ON [negocio].tipo_negocio_id = Proj.[tipoNegocio].id) AS negocios 
+			ON legordo.imovel_codigo = negocios.codigo"
 
-        'If TipoNegocioComboBox.Text <> "" Then
-        'tipoNegocio = TipoNegocioComboBox.Text
-        'conditions.Add(String.Format("designacao_negocio = {0}", tipoNegocio))
-        'End If
+        If TipoNegocioComboBox.Text <> "" Then
+            tipoNegocio = TipoNegocioComboBox.Text
+            If tipoNegocio = "Compra" Then
+                tipoNegocio = "Venda"
+            End If
+            conditions.Add(String.Format("designacao_negocio = '{0}'", tipoNegocio))
+        End If
 
         If TipoImovelComboBox.Text <> "" Then
             tipoImovel = TipoImovelComboBox.Text

@@ -45,7 +45,6 @@ Public Class Register
 
     Private Sub Register_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         ImobiliariasLabel.Font = New Font(ImobiliariasLabel.Font, FontStyle.Bold)
-        Button1.Hide()
         'GlobalVariables.GlobalInfo()
     End Sub
 End Class

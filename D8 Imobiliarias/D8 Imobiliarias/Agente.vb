@@ -5,5 +5,4 @@
         DepartmentLabel.Text = "" 'get department do agente
     End Sub
 
-
 End Class

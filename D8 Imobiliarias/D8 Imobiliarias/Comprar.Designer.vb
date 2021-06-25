@@ -72,7 +72,7 @@ Partial Class Comprar
         'TipoNegocioComboBox
         '
         Me.TipoNegocioComboBox.FormattingEnabled = True
-        Me.TipoNegocioComboBox.Items.AddRange(New Object() {"Compra", "Arrendamento", "Trespasse"})
+        Me.TipoNegocioComboBox.Items.AddRange(New Object() {"Compra", "Aluguer", "Trespasse"})
         Me.TipoNegocioComboBox.Location = New System.Drawing.Point(385, 181)
         Me.TipoNegocioComboBox.Name = "TipoNegocioComboBox"
         Me.TipoNegocioComboBox.Size = New System.Drawing.Size(151, 28)

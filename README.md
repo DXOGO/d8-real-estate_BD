@@ -9,8 +9,8 @@ Artur Romão: [artur-romao](https://www.github.com/artur-romao)
 ## Updates desde 24/07/2021
 
 ### SQL
-Remoção das SP's que se encontravam dentro de outras SP's e substitídas com Transações
-Removidas bastantes funções, views e triggers que não estavam a ser usados
+Remoção das SP's que se encontravam dentro de outras SP's e substitídas com Transações  
+Removidas bastantes funções, views e triggers que não estavam a ser usados  
 Clean-up ao código em geral
 
 ### Visual Basic

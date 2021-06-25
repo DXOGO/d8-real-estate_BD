@@ -12,6 +12,7 @@ No dia inicial de entrega o maior problema que enfrentámos foi não ter ainda i
 ### SQL
 Remoção das SP's que se encontravam dentro de outras SP's e substitídas com Transações  
 Removidas bastantes funções, views e triggers que não estavam a ser usados  
+Inserções e SP's chamados no DML foram atualizados face às alterações das SP's
 Clean-up ao código em geral
 
 ### Visual Basic

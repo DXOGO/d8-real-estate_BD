@@ -1,0 +1,33 @@
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.exe
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.deps.json
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.runtimeconfig.json
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.runtimeconfig.dev.json
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\ref\D8 Imobiliarias.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\D8 Imobiliarias.pdb
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.vbprojAssemblyReference.cache
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.vbproj.GenerateResource.cache
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.AssemblyInfoInputs.cache
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.AssemblyInfo.vb
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.vbproj.CoreCompileInputs.cache
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\ref\D8 Imobiliarias.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.pdb
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.genruntimeconfig.cache
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Agente.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Comprar.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Resources.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Opcao.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Vender.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Register.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Login.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\System.Data.SqlClient.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\runtimes\win-arm64\native\sni.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\runtimes\win-x64\native\sni.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\runtimes\win-x86\native\sni.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\bin\Debug\net5.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8 Imobiliarias.vbproj.CopyComplete
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Info.resources
+C:\Users\ArturRomão\source\repos\D8 Imobiliarias\D8 Imobiliarias\obj\Debug\net5.0-windows\D8_Imobiliarias.Proposta.resources

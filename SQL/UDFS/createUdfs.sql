@@ -17,39 +17,13 @@ END
 GO
 
 
--- ver se nif existe
--- DROP FUNCTION Proj.[udf_validadeNIF]
--- GO
-
-CREATE FUNCTION Proj.[udf_validadeNIF](@nif INT) RETURNS INT
-AS
-BEGIN
-	DECLARE @temp AS INT
-	SET @temp = ( SELECT nif FROM Proj.[Pessoa] AS P WHERE P.nif = @nif);
-	if @temp is null
-		RETURN 0;
-	RETURN @temp;
-END
-GO
-
-
--- all info about pessoa
--- DROP FUNCTION Proj.[udf_getPessoaInfo]
--- GO
-
-CREATE FUNCTION Proj.[udf_getPessoaInfo](@nif INT) RETURNS TABLE
-AS
-	RETURN (SELECT * FROM Proj.[pessoa] AS P WHERE P.nif = @nif);
-GO
-
-
 -- all info about agente
 --DROP FUNCTION Proj.[udf_getAgenteInfo]
 -- GO
 
 CREATE FUNCTION Proj.[udf_getAgenteInfo](@nif INT) RETURNS TABLE
 AS
-    RETURN (SELECT * FROM Proj.[agente] AS A JOIN Proj.[Pessoa] AS P ON A.nif = P.nif WHERE A.nif = @nif);
+    RETURN (SELECT * FROM Proj.[agente] AS A JOIN Proj.[Pessoa] AS P ON A.agente_nif = P.nif WHERE A.nif = @nif);
 GO
 
 
@@ -62,14 +36,14 @@ AS
 BEGIN
     DECLARE @temp AS INT
     DECLARE @id INT -- save agente nif
-	SET @temp = ( SELECT agente_nif FROM (Proj.[Pessoa] AS P JOIN Proj.[agente] AS A ON P.nif = A.agente_nif) WHERE P.nif = @nif);
+	SET @temp = (SELECT agente_nif FROM (Proj.[Pessoa] AS P JOIN Proj.[agente] AS A ON P.nif = A.agente_nif) WHERE P.nif = @nif);
 	
     IF @temp IS NULL
 		SET @id=0;
     ELSE
         SET @id=@temp
 	
-    RETURN @id;
+    RETURN @id; -- 0: nao é agente, 1: é agente
 END
 GO
 
@@ -79,43 +53,9 @@ GO
 
 CREATE FUNCTION Proj.[udf_getMarcacao] (@cod VARCHAR(5)) RETURNS TABLE
 AS
-	RETURN (SELECT I.imovel_codigo, M.data_marc
+	RETURN (SELECT I.imovel_codigo, I.localizacao, I.proprietario_nif, M.data_marc
 			FROM Proj.[imovel] AS I JOIN Proj.[marcacao] AS M ON I.imovel_codigo = M.imovel_codigo
 			WHERE I.imovel_codigo = @cod)
-GO
-
-
--- get all imoveis no mercado numa cidade especifica
--- DROP FUNCTION Proj.[udf_getCityImob]
--- GO
-
-CREATE FUNCTION Proj.[udf_getCityImob] (@loc VARCHAR(50)) RETURNS TABLE
-AS
-    RETURN (SELECT preco, localizacao, ano_construcao, area_total, area_util
-            FROM Proj.[imovel] AS I WHERE I.localizacao = @loc
-            ORDER BY preco ASC);
-GO
-
-
--- get all imoveis no mercado abaixo e acima de um certo preço
--- DROP FUNCTION Proj.[udf_getCityPrice]
--- GO
-
-CREATE FUNCTION Proj.[udf_getCityPrice] (@min_price INT, @max_price INT) RETURNS TABLE
-AS
-	RETURN (SELECT preco, localizacao, ano_construcao, area_total, area_util
-            FROM Proj.[imovel] AS I WHERE I.preco < @max_price AND I.preco > @min_price);
-GO
-
-
--- get info about a specifif imovel
--- DROP FUNCTION Proj.[udf_getImobInfo]
--- GO
-
-CREATE FUNCTION Proj.[udf_getImobInfo] (@code VARCHAR(5)) RETURNS TABLE
-AS
-	RETURN (SELECT preco, localizacao, ano_construcao, area_total, area_util
-			FROM Proj.[imovel] AS I WHERE I.imovel_codigo = @code);
 GO
 
 
@@ -125,14 +65,8 @@ GO
 
 CREATE FUNCTION Proj.[udf_getImobNegocio] (@nid INT) RETURNS TABLE
 AS
-    -- IF @nid > 3 OR @nid < 0
-    --     @nid = 1;    -- default value case if user input isn't valid
 
-    -- DECLARE @preco AS INT, @localizacao AS VARCHAR(50),@ano_construcao AS INT,
-    -- @area_total AS INT, @area_util AS INT;
-
-    -- INSERT @table
-    RETURN (SELECT I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util 
+    RETURN (SELECT TP.designacao_negocio, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util
 			FROM Proj.[imovel] AS I JOIN Proj.[negocio] AS N ON I.imovel_codigo = N.imovel_codigo  
 			JOIN Proj.[tipoNegocio] AS TP ON N.tipo_negocio_id = TP.id
             WHERE TP.id = @nid)
@@ -146,18 +80,10 @@ GO
 
 CREATE FUNCTION Proj.[udf_getHabitacionalInfo] (@nid INT) RETURNS TABLE
 AS 
-    -- IF @nid > 5 OR @nid < 0
-    --     @nid = 1;    -- default value case if user input isn't valid
-
-    -- DECLARE @preco AS INT, @localizacao AS VARCHAR(50), @ano_construcao AS INT,
-    -- @area_total AS INT, @area_util AS INT, @estacionamento BOOLEAN;
-
-    -- INSERT @table 
-    RETURN (SELECT TH.designacao, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, H.num_quartos, H.wcs
+    RETURN (SELECT TH.designacao_habitacional, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, H.num_quartos, H.wcs
             FROM Proj.[imovel] AS I JOIN Proj.[habitacional] AS H ON I.imovel_codigo = H.imovel_codigo
             JOIN Proj.[tipoHabitacional] AS TH ON H.tipo_habitacional_id = TH.id
                     WHERE TH.id = @nid)
-    -- RETURN @table
 GO
 
 
@@ -167,33 +93,10 @@ GO
 
 CREATE FUNCTION Proj.[udf_getComercialInfo] (@nid INT) RETURNS TABLE
 AS
-    -- IF @nid > 3 OR @nid < 0
-    --     @nid = 1;    -- default value case if user input isn't valid
-
-    -- DECLARE @preco AS INT, @localizacao AS VARCHAR(50), @ano_construcao AS INT,
-    -- @area_total AS INT, @area_util AS INT, @estacionamento BOOLEAN;
-
-    -- INSERT @table 
     RETURN (SELECT TC.designacao, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util, C.estacionamento
             FROM Proj.[imovel] AS I JOIN Proj.[comercial] AS C ON I.imovel_codigo = C.imovel_codigo
             JOIN Proj.[tipoComercial] AS TC ON C.tipo_comercial_id = TC.id
             WHERE TC.id = @nid)     
-    -- RETURN @table
-GO
-
-
--- get number of employees for SPECIFIC department
--- DROP FUNCTION Proj.[udf_getDepNumAgent]
--- GO
-
-CREATE FUNCTION Proj.[udf_getDepNumAgent] (@depno INT) RETURNS TABLE
-AS
-    RETURN (SELECT D.dep_number, D.localizacao, COUNT(*) AS numAgentes 
-            FROM p5g5.Proj.[agente] AS A JOIN Proj.[dept] AS D ON A.dep_no = D.dep_number
-            WHERE @depno = A.dep_no
-			GROUP BY D.dep_number, D.localizacao
-			ORDER BY numAgentes DESC OFFSET 0 ROWS
-			)	
 GO
 
 
@@ -254,19 +157,6 @@ END
 GO
 
 
--- devolve codigo de imovel especifico
-CREATE FUNCTION Proj.[udf_getImobCode] (@proprietario_nif INT, @localizacao VARCHAR(50)) RETURNS VARCHAR(5)
-AS
-BEGIN
-	DECLARE @imovel_codigo VARCHAR(5)
-	SET @imovel_codigo = (SELECT imovel_codigo FROM p5g5.Proj.[imovel] 
-		WHERE proprietario_nif=@proprietario_nif AND localizacao=@localizacao)
-	
-	RETURN @imovel_codigo
-END
-GO
-
-
 -- recebe codigo imovel e devolve propostas para imovel especifico
 -- DROP FUNCTION Proj.[udf_getPropostas]
 -- GO
@@ -295,7 +185,6 @@ AS
 			WHERE A.agente_nif = @agente_nif
 	)
 GO
-
 
 -- recebe proprietario e devolve o agente responsavel, o(s) imovel(s) q ele possui e todas as suas marcacoes bem como o interessado q as fez
 -- DROP FUNCTION Proj.[udf_getMarcProp]
@@ -327,37 +216,6 @@ AS
 GO
 
 
--- retorna tabela tp imovel mas com informacao tmb do tipo de imovel q é (entre comerciais e habitacionais)
--- DROP FUNCTION Proj.[udf_getImobTypes]
--- GO
-
-CREATE FUNCTION Proj.[udf_getImobTypes] () 
-	RETURNS @table TABLE (
-		tc_id INT, th_id INT, preco INT, localizacao VARCHAR(50), ano_construcao INT, area_total INT, area_util INT
-	)
-AS
-BEGIN
-	DECLARE @table TABLE
-	SET @table =
-		(SELECT TC.designacao AS comercial_d, TH.designacao AS habitacional_d, I.preco, I.localizacao, I.ano_construcao, I.area_total, I.area_util 
-			FROM p5g5.Proj.[imovel] AS I 
-			LEFT JOIN p5g5.Proj.[comercial] AS C ON I.imovel_codigo = C.imovel_codigo
-			LEFT JOIN p5g5.Proj.[habitacional] AS H ON I.imovel_codigo = H.imovel_codigo
-			LEFT JOIN p5g5.Proj.[tipoComercial] AS TC ON C.tipo_comercial_id = TC.id
-			LEFT JOIN p5g5.Proj.[tipoHabitacional] AS TH ON H.tipo_habitacional_id = TH.id
-		)
-		-- NAO ESTA COMPLETA E NEM CORRE (FALTA CURSOR ACHO EU)
-
-
-END
-GO
-
--- para cada agente mostrar lista dos seus imoveis vendidos
--- DROP FUNCTION Proj.[udf_getImobVendidos]
--- GO
-
-
--- NAO CORRER
 CREATE FUNCTION Proj.[esti8] (@gordo VARCHAR(5)) RETURNS VARCHAR(50)
 AS 
 BEGIN

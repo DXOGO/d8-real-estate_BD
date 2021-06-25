@@ -41,7 +41,6 @@ AS
 GO
 
 
-
 -- mostrar todos os imoveis vendidos 
 -- DROP VIEW Proj.[view_imoveisVendidos]
 -- GO

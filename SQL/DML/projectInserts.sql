@@ -443,190 +443,59 @@ DECLARE @responseMessage VARCHAR(250);
     EXEC Proj.[cp_create_agente] 121658580, 3,  @responseMessage = @responseMessage OUTPUT;
         SELECT @responseMessage AS rm;
 
-    -- MARCACOES nestes imoveis C/ PROPOSTA 
-DECLARE @responseMessage VARCHAR(250);
-	EXEC Proj.[cp_add_imovel] 147657, '880 Waxwing Avenue, Aveiro', 2010, 321, 255, 823099525,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 132196, '29219 Loftsgordon Parkway, Aveiro', 1926, 308, 279, 152532930,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 149919, '652 Clemons Lane, Porto', 1954, 433, 48, 171781978,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 148163, '919 Arizona Alley, Lisboa', 1909, 500, 161, 876915089,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 20845, '77324 Montana Circle, Lisboa', 1978, 325, 110, 922542934,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 122142, '9365 Straubel Court, Lagos', 1913, 324, 144, 966158937,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 12975, '847 Swallow Pass, Porto', 1859, 338, 257, 351592370,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 89411, '02 Village Hill, Ovar', 1901, 336, 208, 514654614,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 38785, '24166 Mcbride Point, Campia', 1862, 394, 292, 505642867,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 140323, '91 Amoth Avenue, Faro', 1925, 472, 230, 228387272,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 24938, '35993 Hanson Hill, Lisboa', 1938, 321, 82,  651860666,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 85163, '14973 Calypso Crossing, Anadia', 1930, 272, 196, 160172334,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 12648, '7 Bayside Street, Espinho', 1911, 256, 177, 616265936,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 143919, '38 Bartillon Terrace, Sagres', 1909, 389, 117, 696942724,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 28939, '925 Glacier Hill Trail, Leiria', 2014, 429, 298, 831440051,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 62733, '43179 Westerfield Trail, Famalicão', 1924, 330, 271, 778516330,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 64412, '06084 Farwell Junction, Trofa', 1853, 190, 94, 229608342,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 97161, '27 Loftsgordon Lane, Trofa', 1952, 375, 356, 723466311,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 141186, '8 Utah Park, Porto', 1958, 355, 295, 936693760,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 51507, '90 Pond Drive, Porto', 1988, 316, 66, 119768849,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 74585, '5890 Vera Lane, Lisboa', 1907, 407, 402, 354369842,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 60656, '67194 2nd Center, Mealhada', 1857, 372, 239, 750394566,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 74639, '10 Ridge Oak Hill, Anadia', 1860, 218, 117, 517157000,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 122622, '48 Del Sol Circle, Santarém', 1998, 365, 101, 251796479,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 7470, '72 Ludington Lane, Setúbal', 1974, 331, 236, 478047643,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 122474, '40 Northview Court, Setúbal', 1903, 419, 41, 823099525,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 67280, '7 Amoth Crossing, Lagoa', 2008, 368, 318, 792808115,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 139337, '75053 Waxwing Road, Guimarães', 1958, 417, 86, 455998693,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 61549, '0 Division Court, Tondela', 1908, 350, 311, 739231581,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 34460, '77 Forest Run Trail, Braga', 1955, 434, 113, 672806706,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 65929, '17 Maryland Junction, Braga', 1879, 314, 312, 900862465,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 119848, '48 Golden Leaf Plaza, Aveiro', 1865, 237, 193, 708093907,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 14345, '5470 Helena Lane, Aveiro', 1970, 171, 20, 471172502,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 56368, '2383 Pond Parkway, Aveiro', 1976, 199, 175, 637579252,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 53762, '61 Jenna Hill, Aveiro', 1976, 477, 258, 823099525,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 42279, '95 Trailsway Junction, Anadia', 1870, 315, 86, 936693760,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 75488, '22 Bunting Lane, Lobão', 1956, 458, 58, 119768849,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 142447, '857 Scofield Center, Canedo', 1906, 497, 116, 696942724,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 59565, '7 Moland Way, Fiães', 1908, 385, 193, 723466311,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC Proj.[cp_add_imovel] 39710, '420 Steensland Place, Lisboa', 1971, 454, 106, 723466311,  @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
+    -- 38 IMOVEIS	- 11 comercial	-27 habitacional 
+EXEC Proj.[cp_add_imovel_comercial] 140323, '91 Amoth Avenue, Faro', 1925, 472, 230, 228387272, 0, 3, 2;
+EXEC Proj.[cp_add_imovel_comercial] 12648, '7 Bayside Street, Espinho', 1911, 256, 177, 616265936, 0, 1, 2;
+EXEC Proj.[cp_add_imovel_comercial] 24938, '35993 Hanson Hill, Lisboa', 1938, 321, 82,  651860666, 0, 2, 1;
+EXEC Proj.[cp_add_imovel_comercial] 60656, '67194 2nd Center, Mealhada', 1857, 372, 239, 750394566, 0, 1, 2;
+EXEC Proj.[cp_add_imovel_comercial] 74639, '10 Ridge Oak Hill, Anadia', 1860, 218, 117, 517157000, 1, 3, 2;
+EXEC Proj.[cp_add_imovel_comercial] 62733, '43179 Westerfield Trail, Famalicão', 1924, 330, 271, 778516330, 0, 2, 1;
+EXEC Proj.[cp_add_imovel_comercial] 132196, '29219 Loftsgordon Parkway, Aveiro', 1926, 308, 279, 152532930, 1, 1, 3;
+EXEC Proj.[cp_add_imovel_comercial] 12975, '847 Swallow Pass, Porto', 1859, 338, 257, 351592370, 0, 1, 2;
+EXEC Proj.[cp_add_imovel_comercial] 139337, '75053 Waxwing Road, Guimarães', 1958, 417, 86, 455998693, 1, 3, 3;
+EXEC Proj.[cp_add_imovel_comercial] 122474, '40 Northview Court, Setúbal', 1903, 419, 41, 823099525, 1, 3, 1;
+EXEC Proj.[cp_add_imovel_comercial] 142447, '857 Scofield Center, Canedo', 1906, 497, 116, 696942724, 1, 2, 1;
+
+EXEC Proj.[cp_add_imovel_habitacional] 89411, '02 Village Hill, Ovar', 1901, 336, 208, 514654614, 3, 3, 1, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 149919, '652 Clemons Lane, Porto', 1954, 433, 48, 171781978, 6, 4, 2, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 148163, '919 Arizona Alley, Lisboa', 1909, 500, 161, 876915089, 1, 2, 1, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 20845, '77324 Montana Circle, Lisboa', 1978, 325, 110, 922542934, 1, 1, 5, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 122142, '9365 Straubel Court, Lagos', 1913, 324, 144, 966158937, 6, 2, 3, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 38785, '24166 Mcbride Point, Campia', 1862, 394, 292, 505642867, 5, 1, 2, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 85163, '14973 Calypso Crossing, Anadia', 1930, 272, 196, 160172334, 2, 2, 2, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 143919, '38 Bartillon Terrace, Sagres', 1909, 389, 117, 696942724, 3, 3, 3, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 28939, '925 Glacier Hill Trail, Leiria', 2014, 429, 298, 831440051, 3, 3, 1, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 64412, '06084 Farwell Junction, Trofa', 1853, 190, 94, 229608342, 4, 1, 3, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 97161, '27 Loftsgordon Lane, Trofa', 1952, 375, 356, 723466311, 3, 1, 1, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 141186, '8 Utah Park, Porto', 1958, 355, 295, 936693760, 3, 4, 1, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 51507, '90 Pond Drive, Porto', 1988, 316, 66, 119768849, 1, 1, 3, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 74585, '5890 Vera Lane, Lisboa', 1907, 407, 402, 354369842, 4, 2, 1, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 122622, '48 Del Sol Circle, Santarém', 1998, 365, 101, 251796479, 1, 1, 5, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 7470, '72 Ludington Lane, Setúbal', 1974, 331, 236, 478047643, 6, 3, 2, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 67280, '7 Amoth Crossing, Lagoa', 2008, 368, 318, 792808115, 5, 2, 2, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 34460, '77 Forest Run Trail, Braga', 1955, 434, 113, 672806706, 3, 1, 3, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 65929, '17 Maryland Junction, Braga', 1879, 314, 312, 900862465, 0, 0, 4, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 119848, '48 Golden Leaf Plaza, Aveiro', 1865, 237, 193, 708093907, 0, 0, 4, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 14345, '5470 Helena Lane, Aveiro', 1970, 171, 20, 471172502, 2, 2, 3, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 56368, '2383 Pond Parkway, Aveiro', 1976, 199, 175, 637579252, 2, 1, 3, 2;
+EXEC Proj.[cp_add_imovel_habitacional] 53762, '61 Jenna Hill, Aveiro', 1976, 477, 258, 823099525, 2, 1, 1, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 42279, '95 Trailsway Junction, Anadia', 1870, 315, 86, 936693760, 3, 4, 1, 3;
+EXEC Proj.[cp_add_imovel_habitacional] 75488, '22 Bunting Lane, Lobão', 1956, 458, 58, 119768849, 4, 4, 1, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 59565, '7 Moland Way, Fiães', 1908, 385, 193, 723466311, 1, 1, 1, 1;
+EXEC Proj.[cp_add_imovel_habitacional] 39710, '420 Steensland Place, Lisboa', 1971, 454, 106, 723466311, 4, 2, 2, 1;
 
 
 
 -- 8 PROPOTAS de IMOVEIS
 -- propostas de interessados q nao fizeram marcacao
 --DECLARE @responseMessage VARCHAR(250);
-    EXEC p5g5.Proj.[cp_add_proposta] 59276, 723466311, 'A9406', @responseMessage = @responseMessage OUTPUT;
-        SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 62954, 112133071, 'B1313', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 07485, 116872071, 'B1649', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 14400, 117003456, 'C6640', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 55999, 118394750, 'C9695', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 85554, 119650587, 'D3315', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-    EXEC p5g5.Proj.[cp_add_proposta] 22500, 119768849, 'F5434', @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-
-
--- 40 TIPOS DE NEGOCIO p 40 IMOVEIS
---DECLARE @responseMessage VARCHAR(250);
-	EXEC p5g5.Proj.[cp_add_negocio] 'A9406', 1, @responseMessage = @responseMessage OUTPUT;
-			SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'B1313', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'B1649', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'C6640', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'C9695', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'D3315', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'F5434', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'F8539', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'F9735', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'G2408', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'G9103', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'H4561', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'I3182', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'I9689', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'J4492', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'J9245', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'L3043', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'L3562', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'L8030', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'M1039', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'M7079', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'P4489', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'Q9818', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'R4770', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'R5061', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'S1881', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'T2332', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'T4925', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'V4792', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'V8333', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'W4554', 3, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'W7152', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'W8827', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'X2281', 2, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'X3241', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'X6994', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'Y1382', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'Y4414', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;
-	EXEC p5g5.Proj.[cp_add_negocio] 'Y7365', 1, @responseMessage = @responseMessage OUTPUT;
-		SELECT @responseMessage AS rm;        
+EXEC p5g5.Proj.[cp_add_proposta] 59276, 723466311, 'A3241'
+EXEC p5g5.Proj.[cp_add_proposta] 62954, 112133071, 'E6627'
+EXEC p5g5.Proj.[cp_add_proposta] 07485, 116872071, 'F4392'
+EXEC p5g5.Proj.[cp_add_proposta] 14400, 117003456, 'O1913'
+EXEC p5g5.Proj.[cp_add_proposta] 55999, 118394750, 'Q3467'
+EXEC p5g5.Proj.[cp_add_proposta] 85554, 119650587, 'L4642'
+EXEC p5g5.Proj.[cp_add_proposta] 22500, 119768849, 'E5473'
 
 
 -- INTERESSADOS com MARCACAO (sao 12)
@@ -669,50 +538,6 @@ INSERT INTO Proj.[tipoHabitacional] (id, designacao_habitacional) values (3, 'Mo
 INSERT INTO Proj.[tipoHabitacional] (id, designacao_habitacional) values (4, 'Terreno');
 INSERT INTO Proj.[tipoHabitacional] (id, designacao_habitacional) values (5, 'Quarto');
 	
-
--- 12 IMOVEIS COMERCIAIS
--- 0 -> false, 1 -> true																
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('B1649', 0, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('D3315', 0, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('F9735', 1, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('H4561', 0, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('I3182', 1, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('J4492', 1, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('L3562', 1, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('M7079', 1, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('R4770', 1, 3);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('T2332', 0, 1);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('V8333', 0, 2);
-INSERT INTO Proj.[comercial] (imovel_codigo, estacionamento, tipo_comercial_id) values ('W8827', 0, 1);
-
--- 28 IMOVEIS HABITACIONAIS
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('A9406', 4, 2, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('B1313', 3, 3, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('C6640', 1, 1, 5);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('C9695', 5, 2, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('F5434', 6, 3, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('F8539', 1, 1, 5);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('G2408', 0, 0, 4);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('G9103', 3, 3, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('I3182', 0, 1, 4);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('I9689', 3, 3, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('J9245', 2, 2, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('L3043', 6, 4, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('L8030', 1, 2, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('M1039', 3, 4, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('P4489', 5, 1, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('Q9818', 4, 1, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('R5061', 4, 4, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('S1881', 4, 2, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('T4925', 1, 1, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('V4792', 6, 2, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('W4554', 3, 1, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('W7152', 3, 1, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('X2281', 2, 1, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('X3241', 1, 1, 1);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('X6994', 2, 2, 2);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('Y1382', 3, 3, 3);
-INSERT INTO Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id) values ('Y4414', 2, 1, 1);
 
 -- TIPO DE ADD ON: 1-churrasqueira, 2-piscina, 3-paineis solares, 4-jardim, 5-jacuzzi, 6-garagem'Y7365X8340' 
 INSERT INTO Proj.[addOn] (id, designacao) values (1, 'churrasqueira');

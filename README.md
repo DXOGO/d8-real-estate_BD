@@ -3,7 +3,7 @@
 Foi criada uma base de dados de uma imobiliária e interface gŕafica para uso de clientes.
 
 ## Authors: 
-Diogo Cruz: github.com/DXOGO  
+Diogo Cruz: www.github.com/DXOGO  
 Artur Romão: github.com/artur-romao
 
 ## Updates desde 24/07/2021

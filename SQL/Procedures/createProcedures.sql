@@ -6,19 +6,20 @@ GO
 -- GO
 
 CREATE PROCEDURE Proj.[cp_create_pessoa]  -- criar pessoa
-@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @morada VARCHAR(50), @num_tlm INT, @password VARCHAR(64), @responseMessage NVARCHAR(250) OUTPUT
+@nif INT, @nome VARCHAR(50), @birth DATE, @email VARCHAR(50), @morada VARCHAR(50), @num_tlm INT, @password VARCHAR(64)
 AS 
-	DECLARE @pwd VARBINARY(64)
-	SET @pwd = (SELECT ENCRYPTBYPASSPHRASE('**********', @password))
-	BEGIN TRY
-		IF NOT EXISTS(SELECT nif  FROM p5g5.Proj.[pessoa] WHERE nif=@nif)	-- se n existe pessoa c esse nif, adciona
-			INSERT INTO p5g5.Proj.[pessoa] VALUES (@nif, @nome, @birth, @morada, @email, @num_tlm, @pwd)
-			SET @responseMessage='Success'
-	END TRY
-	BEGIN CATCH
-			SET @responseMessage='Failed'
-	END CATCH
-
+DECLARE @pwd VARBINARY(64)
+SET @pwd = (SELECT ENCRYPTBYPASSPHRASE('**********', @password))
+BEGIN TRAN
+BEGIN TRY
+	IF NOT EXISTS(SELECT nif  FROM p5g5.Proj.[pessoa] WHERE nif=@nif)	-- se n existe pessoa c esse nif, adciona
+		INSERT INTO p5g5.Proj.[pessoa] VALUES (@nif, @nome, @birth, @morada, @email, @num_tlm, @pwd)
+	COMMIT TRAN
+END TRY
+BEGIN CATCH
+	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+	RAISERROR('Couldnt create pessoa', 16, 1)
+END CATCH
 GO
 
 
@@ -26,22 +27,21 @@ GO
 -- GO
 
 CREATE PROCEDURE Proj.[cp_create_agente]       -- criar agente
-@agente_nif INT, @dep_no INT, @responseMessage NVARCHAR(250) OUTPUT
+@agente_nif INT, @dep_no INT
 AS	
-	DECLARE @num_agente INT
-	-- num de agente é incrementado para cada agente criado, começando no 1 até n
-	SET @num_agente = ((SELECT COUNT(*) FROM p5g5.Proj.[agente]) + 1)
-	BEGIN
-		BEGIN TRY
-			-- se ainda nao está na tabela de agente, adiciona
-			IF NOT EXISTS(SELECT agente_nif FROM p5g5.Proj.[agente] WHERE agente_nif = @agente_nif)
-				INSERT INTO p5g5.Proj.[agente] VALUES (@agente_nif, @num_agente, @dep_no)
-			SET @responseMessage='Success'		
-		END TRY	
-		BEGIN CATCH
-			SET @responseMessage='Failed'
-		END CATCH
-	END
+DECLARE @num_agente INT -- num de agente é incrementado para cada agente criado, começando no 1 até n
+SET @num_agente = ((SELECT COUNT(*) FROM p5g5.Proj.[agente]) + 1)
+BEGIN TRAN
+BEGIN TRY
+		-- se ainda nao está na tabela de agente, adiciona
+		IF NOT EXISTS(SELECT agente_nif FROM p5g5.Proj.[agente] WHERE agente_nif = @agente_nif)
+			INSERT INTO p5g5.Proj.[agente] VALUES (@agente_nif, @num_agente, @dep_no)
+		COMMIT TRAN	
+END TRY	
+BEGIN CATCH
+	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+	RAISERROR('Couldnt create agente', 16, 1)
+END CATCH
 GO
 
 -- DROP PROCEDURE Proj.[cp__add_imovel_habitacional];
@@ -187,37 +187,37 @@ AS
 BEGIN
 	DECLARE @v_preco INT, @v_localizacao VARCHAR(50), @v_ano_construcao INT, @v_area_total INT, 
 		@v_area_util INT, @v_proprietario_nif INT, @v_proposta_codigo VARCHAR(5), @v_valor INT, @v_interessado_nif INT
-	
-	BEGIN TRY
-		IF EXISTS(SELECT P.imovel_codigo FROM p5g5.Proj.[imovel] AS I JOIN p5g5.Proj.[proposta] AS P ON I.imovel_codigo=P.imovel_codigo
+BEGIN TRAN
+BEGIN TRY
+	SET NOCOUNT ON
+	IF EXISTS(SELECT P.imovel_codigo FROM p5g5.Proj.[imovel] AS I JOIN p5g5.Proj.[proposta] AS P ON I.imovel_codigo=P.imovel_codigo
 					WHERE P.imovel_codigo=@v_imovel_codigo) --se existe imovel
+	BEGIN
+		SELECT @v_preco=preco, @v_localizacao=localizacao, @v_ano_construcao=ano_construcao, 
+					@v_area_total=area_total, @v_area_util=area_util, @v_proprietario_nif=proprietario_nif
+		FROM p5g5.Proj.[imovel] WHERE imovel_codigo=@v_imovel_codigo
 
-		BEGIN TRAN
-				SELECT @v_preco=preco, @v_localizacao=localizacao, @v_ano_construcao=ano_construcao, 
-							@v_area_total=area_total, @v_area_util=area_util, @v_proprietario_nif=proprietario_nif
-				FROM p5g5.Proj.[imovel] WHERE imovel_codigo=@v_imovel_codigo
+		SELECT @v_proposta_codigo=proposta_codigo, @v_valor=valor, @v_interessado_nif=interessado_nif
+		FROM p5g5.Proj.[proposta] WHERE imovel_codigo=@v_imovel_codigo
 
-				SELECT @v_proposta_codigo=proposta_codigo, @v_valor=valor, @v_interessado_nif=interessado_nif
-				FROM p5g5.Proj.[proposta] WHERE imovel_codigo=@v_imovel_codigo
-
-				INSERT INTO p5g5.Proj.[vendido] (v_imovel_codigo, v_preco, v_localizacao, v_ano_construcao, v_area_total, v_area_util, v_proprietario_nif, v_proposta_codigo, v_valor, v_interessado_nif)
-				VALUES(@v_imovel_codigo, @v_preco, @v_localizacao, @v_ano_construcao, @v_area_total, @v_area_util, @v_proprietario_nif, @v_proposta_codigo, @v_valor, @v_interessado_nif)
+		INSERT INTO p5g5.Proj.[vendido] (v_imovel_codigo, v_preco, v_localizacao, v_ano_construcao, v_area_total, v_area_util, v_proprietario_nif, v_proposta_codigo, v_valor, v_interessado_nif)
+		VALUES(@v_imovel_codigo, @v_preco, @v_localizacao, @v_ano_construcao, @v_area_total, @v_area_util, @v_proprietario_nif, @v_proposta_codigo, @v_valor, @v_interessado_nif)
 				
-				-- eliminar de todas as tabelas e das suas dependencias
-				DELETE FROM Proj.temAddOn WHERE habitacional_codigo=@v_imovel_codigo
-				DELETE FROM Proj.habitacional  WHERE imovel_codigo=@v_imovel_codigo
-				DELETE FROM Proj.comercial WHERE imovel_codigo=@v_imovel_codigo
-				DELETE FROM Proj.proposta WHERE imovel_codigo=@v_imovel_codigo
-				DELETE FROM Proj.marcacao WHERE imovel_codigo=@v_imovel_codigo
-				DELETE FROM Proj.negocio WHERE imovel_codigo=@v_imovel_codigo
-				DELETE FROM Proj.imovel WHERE imovel_codigo=@v_imovel_codigo
-
-			COMMIT TRAN
-		END TRY
-    BEGIN CATCH
-		ROLLBACK TRANSACTION
-		RAISERROR('Couldnt update imovel...', 16, 1)
-    END CATCH
+		-- eliminar de todas as tabelas e das suas dependencias
+		DELETE FROM Proj.temAddOn WHERE habitacional_codigo=@v_imovel_codigo
+		DELETE FROM Proj.habitacional  WHERE imovel_codigo=@v_imovel_codigo
+		DELETE FROM Proj.comercial WHERE imovel_codigo=@v_imovel_codigo
+		DELETE FROM Proj.proposta WHERE imovel_codigo=@v_imovel_codigo
+		DELETE FROM Proj.marcacao WHERE imovel_codigo=@v_imovel_codigo
+		DELETE FROM Proj.negocio WHERE imovel_codigo=@v_imovel_codigo
+		DELETE FROM Proj.imovel WHERE imovel_codigo=@v_imovel_codigo
+		END
+		COMMIT TRAN
+END TRY
+BEGIN CATCH
+	IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+	RAISERROR('Couldnt update imovel...', 16, 1)
+END CATCH
 END
 GO
 
@@ -233,12 +233,15 @@ BEGIN
 		IF EXISTS(SELECT nif FROM p5g5.Proj.[pessoa] WHERE nif=@nif) -- se o nif existe
 		
 		BEGIN TRAN
+			DELETE H FROM Proj.[habitacional] H INNER JOIN Proj.[imovel] I ON H.imovel_codigo=I.imovel_codigo WHERE I.proprietario_nif=@nif
+			DELETE C FROM Proj.[comercial] C JOIN Proj.[imovel] I ON C.imovel_codigo=I.imovel_codigo WHERE I.proprietario_nif=@nif
+			DELETE N FROM Proj.[negocio] N INNER JOIN Proj.[imovel] I ON N.imovel_codigo=I.imovel_codigo WHERE I.proprietario_nif=@nif
 			DELETE FROM Proj.[marcacao] WHERE interessado_nif=@nif
 			DELETE FROM Proj.[proposta] WHERE interessado_nif=@nif
 			DELETE FROM Proj.[imovel] WHERE proprietario_nif=@nif
 			DELETE FROM Proj.[interessado] WHERE interessado_nif=@nif
 			DELETE FROM Proj.[proprietario] WHERE proprietario_nif=@nif
-			DELETE FROM Proj.[vendido] WHERE proprietario_nif=@nif
+			DELETE FROM Proj.[vendido] WHERE v_proprietario_nif=@nif
 			DELETE FROM Proj.[pessoa] WHERE nif=@nif
 		COMMIT TRAN
 

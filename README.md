@@ -17,6 +17,7 @@ Clean-up ao código em geral
 
 ### Visual Basic
 Filtro de selecionar imóveis com tipo de negócios específicos atualizado  
-Propostas já está 100% funcional para o interessado que as faz e para o proprietário que as recebe e uma vez que sejam aceites pelo proprietário do imóvel passam da tabela de imóveis no mercado (e as suas depenências consquentes) para a tabela de imóveis vendidos 
+Estabelecida a ligação na interface entre os imóveis dos proprietários e os interessados que fazem propostas, ou seja, propostas agora feitas pelos interessados podem ser aceites pelos proprietários, fazendo que passem da tabela de imóveis no mercado (e as suas depenências consquentes) para a tabela de imóveis vendidos.  
+
 
 

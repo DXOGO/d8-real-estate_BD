@@ -1,4 +1,10 @@
-﻿Public Class Vender
+﻿Imports System.Data.SqlClient
+Public Class Vender
+    Dim CN As SqlConnection
+    Dim dbServer = "tcp:mednat.ieeta.pt\SQLSERVER,8101"
+    Dim dbName = "p5g5"
+    Dim userName = "p5g5"
+    Dim userPass = "!DXartur2021"
     Private Sub TipoImovelComboBox_SelectedIndexChanged(sender As Object, e As EventArgs) Handles TipoImovelComboBox.SelectedIndexChanged
         Select Case TipoImovelComboBox.SelectedItem.ToString
             Case "Habitacional"
@@ -219,9 +225,87 @@
     End Sub
 
     Private Sub AnunciarButton_Click(sender As Object, e As EventArgs) Handles AnunciarButton.Click
-        Me.Hide()
-        Dim newForm As Opcao
-        newForm = New Opcao()
-        newForm.Show()
+        If NegocioComboBox.Text = "" Or TipoImovelComboBox.Text = "" Or (ImoveisComerciais.Text = "" And ImoveisHabitacionais.Text = "") Or LocalizacaoTextBox.Text = "" Or
+            AreaTotalTextBox.Text = "" Or AreaUtilTextBox.Text = "" Or PrecoTextBox.Text = "" Or
+                AnoConstrucaoTextBox.Text = "" Then
+            MsgBox("Preencha todos os campos antes de anunciar o imóvel!")
+        Else
+            Dim CMD As New SqlCommand
+            CN = New SqlConnection("data Source = " + dbServer + " ;" +
+                                "initial Catalog = " + dbName + ";" +
+                                "uid = " + userName + ";" +
+                                "password = " + userPass)
+
+            CMD.Connection = CN
+            CN.Open()
+            Dim tipo_negocio As Integer
+            If NegocioComboBox.Text = "Venda" Then
+                tipo_negocio = 1
+            ElseIf NegocioComboBox.Text = "Arrendamento" Then
+                tipo_negocio = 2
+            ElseIf NegocioComboBox.Text = "Trespasse" Then
+                tipo_negocio = 3
+            End If
+            If (ImoveisHabitacionais.Text = "") Then
+                Dim tipo_comercial As Integer
+                If ImoveisComerciais.Text = "Escritório" Then
+                    tipo_comercial = 1
+                ElseIf ImoveisComerciais.Text = "Loja" Then
+                    tipo_comercial = 2
+                ElseIf ImoveisComerciais.Text = "Armazém" Then
+                    tipo_comercial = 3
+                End If
+                CMD.CommandText = "Proj.[cp_add_imovel_comercial]"
+                CMD.CommandType = CommandType.StoredProcedure
+                CMD.Parameters.Clear()
+                CMD.Parameters.AddWithValue("@preco", Integer.Parse(PrecoTextBox.Text))
+                CMD.Parameters.AddWithValue("@localizacao", LocalizacaoTextBox.Text)
+                CMD.Parameters.AddWithValue("@ano_construcao", Integer.Parse(AnoConstrucaoTextBox.Text))
+                CMD.Parameters.AddWithValue("@area_total", Integer.Parse(AreaTotalTextBox.Text))
+                CMD.Parameters.AddWithValue("@area_util", Integer.Parse(AreaUtilTextBox.Text))
+                CMD.Parameters.AddWithValue("@proprietario_nif", Integer.Parse(Login.user_NIF))
+                CMD.Parameters.AddWithValue("@estacionamento", 1)
+                CMD.Parameters.AddWithValue("@comercial_id", tipo_comercial)
+                CMD.Parameters.AddWithValue("@negocio_id", tipo_negocio)
+                CMD.ExecuteNonQuery()
+            ElseIf (ImoveisComerciais.Text = "") Then
+                Dim tipo_habitacional As Integer
+                If ImoveisHabitacionais.Text = "Apartamento" Then
+                    tipo_habitacional = 1
+                ElseIf ImoveisHabitacionais.Text = "Quinta" Then
+                    tipo_habitacional = 2
+                ElseIf ImoveisHabitacionais.Text = "Moradia" Then
+                    tipo_habitacional = 3
+                ElseIf ImoveisHabitacionais.Text = "Terreno" Then
+                    tipo_habitacional = 4
+                ElseIf ImoveisHabitacionais.Text = "Quarto" Then
+                    tipo_habitacional = 5
+                End If
+                CMD.CommandText = "Proj.[cp_add_imovel_habitacional]"
+                CMD.CommandType = CommandType.StoredProcedure
+                CMD.Parameters.Clear()
+                CMD.Parameters.AddWithValue("@preco", Integer.Parse(PrecoTextBox.Text))
+                CMD.Parameters.AddWithValue("@localizacao", LocalizacaoTextBox.Text)
+                CMD.Parameters.AddWithValue("@ano_construcao", Integer.Parse(AnoConstrucaoTextBox.Text))
+                CMD.Parameters.AddWithValue("@area_total", Integer.Parse(AreaTotalTextBox.Text))
+                CMD.Parameters.AddWithValue("@area_util", Integer.Parse(AreaUtilTextBox.Text))
+                CMD.Parameters.AddWithValue("@proprietario_nif", Integer.Parse(Login.user_NIF))
+                CMD.Parameters.AddWithValue("@num_quartos", Integer.Parse(QuartosTextBox.Text))
+                CMD.Parameters.AddWithValue("@wcs", Integer.Parse(WCTextBox.Text))
+                CMD.Parameters.AddWithValue("@habitacional_id", tipo_habitacional)
+                CMD.Parameters.AddWithValue("@negocio_id", tipo_negocio)
+                CMD.ExecuteNonQuery()
+            End If
+            CN.Close()
+            MsgBox("Anúncio publicado com sucesso!")
+            ImoveisHabitacionais.Visible = False
+            ImoveisComerciais.Visible = False
+            HideInformation()
+            Me.Close()
+            Dim newForm As Opcao
+            newForm = New Opcao()
+            newForm.Show()
+        End If
     End Sub
+
 End Class

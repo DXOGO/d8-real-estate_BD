@@ -21,22 +21,6 @@ END
 GO
 
 
--- verificar se o email e password estao certos
--- DROP TRIGGER Proj.[trigger_login_pessoa]
--- GO
-
---CREATE TRIGGER Proj.[trigger_login_pessoa] ON Proj.[pessoa] --registar pessoa nova
---INSTEAD OF INSERT
---AS
---BEGIN
---	DECLARE @email VARCHAR(50), @password VARCHAR(50);
---	SELECT @email=email, @password=CONVERT(VARCHAR(20), DECRYPTBYPASSPHRASE('**********',[password])) FROM inserted;
---	IF NOT EXISTS(SELECT * FROM p5g5.Proj.[pessoa] WHERE email=@email AND [password]=@password)
---		RAISERROR('Email or password incorrect!', 16, 1)
-
---END
---GO
-
 -- ver se já existe marcacao no dia escolhido pelo interessado
 -- DROP TRIGGER Proj.[trigger_marcacao]
 -- GO
@@ -45,35 +29,35 @@ CREATE TRIGGER Proj.[trigger_marcacao] ON Proj.[marcacao]
 INSTEAD OF INSERT
 AS
 BEGIN
-	DECLARE @data_marc DATE, @interessado_nif INT, @imovel_codigo VARCHAR(5), @now DATE
-	SET @now = CAST(DATEADD(DAY, 1, GETDATE()) AS DATE)
+    DECLARE @data_marc DATE, @interessado_nif INT, @imovel_codigo VARCHAR(5), @now DATE
+    SET @now = CAST(DATEADD(DAY, 1, GETDATE()) AS DATE)
 
-	SELECT @data_marc=data_marc, @interessado_nif=interessado_nif, @imovel_codigo=imovel_codigo FROM INSERTED;
-	-- checkar se data é valida
-	BEGIN TRY
-		IF NOT EXISTS(SELECT data_marc FROM p5g5.Proj.[marcacao] JOIN p5g5.Proj.[imovel] AS I ON I.imovel_codigo= @imovel_codigo WHERE data_marc=@data_marc)
-		BEGIN
-			IF @data_marc > @now -- verificar se a data é maior q agora
-			BEGIN TRAN
-				-- criar interessado se ele ainda n ta na tablea
-				IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif = @interessado_nif)
-					-- criar interessado
-					INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
+    SELECT @data_marc=data_marc, @interessado_nif=interessado_nif, @imovel_codigo=imovel_codigo FROM INSERTED;
+    -- checkar se data é valida
+    BEGIN TRY
+        IF NOT EXISTS(SELECT data_marc FROM p5g5.Proj.[marcacao] JOIN p5g5.Proj.[imovel] AS I ON I.imovel_codigo= @imovel_codigo WHERE data_marc=@data_marc)
+        BEGIN
+            IF @data_marc > @now -- verificar se a data é maior q agora
+            BEGIN TRAN
+                -- criar interessado se ele ainda n ta na tablea
+                IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif = @interessado_nif)
+                    -- criar interessado
+                    INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
 
-					INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
-								VALUES (@data_marc, @interessado_nif, @imovel_codigo)
-			COMMIT TRAN
-		END
-		ELSE
-			ROLLBACK TRAN
-			RAISERROR('Imovel ja tem proposta nesse dia...', 16, 1)
-	END TRY
+                    INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
+                                VALUES (@data_marc, @interessado_nif, @imovel_codigo)
+            COMMIT TRAN
+            ROLLBACK TRAN
+            RAISERROR('Imovel ja tem proposta nesse dia...', 16, 1)
+        END
+    END TRY
     BEGIN CATCH
-		ROLLBACK TRANSACTION
-		RAISERROR('Couldnt add proposta...', 16, 1)
+        ROLLBACK TRANSACTION
+        RAISERROR('Couldnt add proposta...', 16, 1)
     END CATCH
 END
 GO
+   
 
 -- DROP TRIGGER Proj.[trigger_addon] 
 -- GO

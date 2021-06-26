@@ -163,12 +163,15 @@ BEGIN TRY
 			-- criar interessado
 			INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
 
-		DECLARE @proposta_codigo VARCHAR(5) -- criar codigo da proposta random
-		SET @proposta_codigo = (SELECT p5g5.Proj.[udf_createPropostaCode]())
+		IF ((SELECT interessado_nif FROM Proj.[interessado] WHERE interessado_nif=@interessado_nif) <> (SELECT proprietario_nif FROM Proj.[proprietario] WHERE proprietario_nif=@interessado_nif))
+		BEGIN
+			DECLARE @proposta_codigo VARCHAR(5) -- criar codigo da proposta random
+			SET @proposta_codigo = (SELECT p5g5.Proj.[udf_createPropostaCode]())
 
-		--adicionar a proposta
-		INSERT INTO p5g5.Proj.[proposta] (proposta_codigo, valor, interessado_nif, imovel_codigo)
-		VALUES(@proposta_codigo, @valor, @interessado_nif, @imovel_codigo) 
+			--adicionar a proposta
+			INSERT INTO p5g5.Proj.[proposta] (proposta_codigo, valor, interessado_nif, imovel_codigo)
+			VALUES(@proposta_codigo, @valor, @interessado_nif, @imovel_codigo) 
+		END
 	END
 	COMMIT TRANSACTION
 END TRY

@@ -279,7 +279,7 @@ EXEC p5g5.Proj.[cp_add_proposta] 85554, 119650587, 'L4642'
 EXEC p5g5.Proj.[cp_add_proposta] 22500, 119768849, 'E5473'
 
 
--- INTERESSADOS com MARCACAO (sao 12)
+-- MARCACAO
 INSERT INTO Proj.[marcacao] (data_marc, interessado_nif, imovel_codigo) values ('2022-12-22', 112133071, 'A9406');
 INSERT INTO Proj.[marcacao] (data_marc, interessado_nif, imovel_codigo) values ('2021-10-12', 116872071, 'B1313');
 INSERT INTO Proj.[marcacao] (data_marc, interessado_nif, imovel_codigo) values ('2021-11-27', 117003456, 'B1649');

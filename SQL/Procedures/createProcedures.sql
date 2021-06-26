@@ -59,31 +59,32 @@ BEGIN TRY
 	BEGIN
 		-- se o nif_prop n existe
 		IF NOT EXISTS(SELECT proprietario_nif FROM p5g5.Proj.[proprietario] WHERE proprietario_nif=@proprietario_nif)
-
+		BEGIN
 			DECLARE @agente_nif INT -- gerar agente aleatorio entre os que existem
 			SET @agente_nif = (SELECT TOP 1 agente_nif FROM p5g5.Proj.[agente] ORDER BY NEWID())
-
-			DECLARE @imovel_codigo VARCHAR(5) -- geração de um codigo random
-			SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
-
-			DECLARE @referencia VARCHAR(9) -- gerar referencia para negocio
-			SET @referencia = (SELECT p5g5.Proj.[udf_createRefCode]())
                 
 			-- se ainda nao está na tabela de proprietarios, adiciona
 			INSERT INTO p5g5.Proj.[proprietario] VALUES (@proprietario_nif, @agente_nif)
+		END
 
-			-- se nao for um imovel repetido, adiciona a tabela imovel
-			IF NOT EXISTS(SELECT localizacao FROM p5g5.Proj.[imovel] WHERE localizacao=@localizacao) 
-				INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
-				VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+		DECLARE @imovel_codigo VARCHAR(5) -- geração de um codigo random
+		SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
 
-			-- add tabela habitacional
-			INSERT INTO p5g5.Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id)
-			VALUES(@imovel_codigo, @num_quartos, @wcs, @habitacional_id)
+		DECLARE @referencia VARCHAR(9) -- gerar referencia para negocio
+		SET @referencia = (SELECT p5g5.Proj.[udf_createRefCode]())
+
+		-- se nao for um imovel repetido, adiciona a tabela imovel
+		IF NOT EXISTS(SELECT localizacao FROM p5g5.Proj.[imovel] WHERE localizacao=@localizacao) 
+			INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
+			VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+
+		-- add tabela habitacional
+		INSERT INTO p5g5.Proj.[habitacional] (imovel_codigo, num_quartos, wcs, tipo_habitacional_id)
+		VALUES(@imovel_codigo, @num_quartos, @wcs, @habitacional_id)
 	
-			-- add tabela negocio
-			INSERT INTO p5g5.Proj.[negocio] (referencia, imovel_codigo, tipo_negocio_id)
-			VALUES(@referencia, @imovel_codigo, @negocio_id) 
+		-- add tabela negocio
+		INSERT INTO p5g5.Proj.[negocio] (referencia, imovel_codigo, tipo_negocio_id)
+		VALUES(@referencia, @imovel_codigo, @negocio_id) 
 		END
 		COMMIT TRANSACTION
 END TRY
@@ -109,31 +110,32 @@ BEGIN TRY
 	BEGIN
 		-- se o nif_prop n existe
 		IF NOT EXISTS(SELECT proprietario_nif FROM p5g5.Proj.[proprietario] WHERE proprietario_nif=@proprietario_nif)
-
-			DECLARE @imovel_codigo VARCHAR(5) -- geração de um codigo random
-			SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
-
+		BEGIN
 			DECLARE @agente_nif INT -- gerar agente aleatorio entre os que existem
 			SET @agente_nif = (SELECT TOP 1 agente_nif FROM p5g5.Proj.[agente] ORDER BY NEWID())
-
-			DECLARE @referencia VARCHAR(9) -- gerar referencia para negocio
-			SET @referencia = (SELECT p5g5.Proj.[udf_createRefCode]())
 				
 			-- se ainda nao está na tabela de proprietarios, adiciona
 			INSERT INTO p5g5.Proj.[proprietario] VALUES (@proprietario_nif, @agente_nif)
-                
-			-- se nao for um imovel repetido, adiciona a tabela imovel
-			IF NOT EXISTS(SELECT localizacao FROM p5g5.Proj.[imovel] WHERE localizacao=@localizacao) 
-				INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
-				VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+        END
+		
+		DECLARE @imovel_codigo VARCHAR(5) -- geração de um codigo random
+		SET @imovel_codigo = (SELECT p5g5.Proj.[udf_createImovelCode]())
 
-			-- add comercial
-			INSERT INTO p5g5.Proj.comercial (imovel_codigo, estacionamento, tipo_comercial_id)
-			VALUES(@imovel_codigo, @estacionamento, @comercial_id)
+		DECLARE @referencia VARCHAR(9) -- gerar referencia para negocio
+		SET @referencia = (SELECT p5g5.Proj.[udf_createRefCode]())
 
-			-- add tabela negocio
-			INSERT INTO p5g5.Proj.[negocio] (referencia, imovel_codigo, tipo_negocio_id)
-			VALUES(@referencia, @imovel_codigo, @negocio_id)
+		-- se nao for um imovel repetido, adiciona a tabela imovel
+		IF NOT EXISTS(SELECT localizacao FROM p5g5.Proj.[imovel] WHERE localizacao=@localizacao) 
+			INSERT INTO p5g5.Proj.[imovel] (imovel_codigo, preco, localizacao, ano_construcao, area_total, area_util, proprietario_nif)
+			VALUES(@imovel_codigo, @preco, @localizacao, @ano_construcao, @area_total, @area_util, @proprietario_nif)
+
+		-- add comercial
+		INSERT INTO p5g5.Proj.comercial (imovel_codigo, estacionamento, tipo_comercial_id)
+		VALUES(@imovel_codigo, @estacionamento, @comercial_id)
+
+		-- add tabela negocio
+		INSERT INTO p5g5.Proj.[negocio] (referencia, imovel_codigo, tipo_negocio_id)
+		VALUES(@referencia, @imovel_codigo, @negocio_id)
 	END
 	COMMIT TRANSACTION
 END TRY

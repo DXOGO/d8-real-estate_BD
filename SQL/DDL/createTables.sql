@@ -51,15 +51,6 @@ CREATE TABLE Proj.[proprietario] ( -- proprietario
 	FOREIGN KEY(agente_nif) REFERENCES Proj.[agente](agente_nif),
 );
 
-CREATE TABLE Proj.[marcacao] ( -- marcacao
-	data_marc DATE NOT NULL,
-	interessado_nif INT NOT NULL,
-	imovel_codigo VARCHAR(5) NOT NULL,
-
-    PRIMARY KEY(data_marc),
-    FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif)
-);
-
 CREATE TABLE Proj.[imovel] ( -- imovel
 	imovel_codigo VARCHAR(5) NOT NULL,
 	preco INT NOT NULL CHECK (preco > 0),
@@ -72,6 +63,16 @@ CREATE TABLE Proj.[imovel] ( -- imovel
 
     PRIMARY KEY(imovel_codigo),
     FOREIGN KEY(proprietario_nif) REFERENCES Proj.[proprietario](proprietario_nif)
+);
+
+CREATE TABLE Proj.[marcacao] ( -- marcacao
+	data_marc DATE NOT NULL,
+	interessado_nif INT NOT NULL,
+	imovel_codigo VARCHAR(5) NOT NULL,
+
+    PRIMARY KEY(data_marc),
+	FOREIGN KEY(imovel_codigo) REFERENCES Proj.[imovel](imovel_codigo),
+    FOREIGN KEY(interessado_nif) REFERENCES Proj.[interessado](interessado_nif)
 );
 
 

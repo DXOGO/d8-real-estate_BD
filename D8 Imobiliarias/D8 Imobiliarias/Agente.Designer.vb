@@ -22,7 +22,7 @@ Partial Class Agente
     'Não o modifique usando o editor de códigos.
     <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.ListBox1 = New System.Windows.Forms.ListBox()
+        Me.InfoListBox = New System.Windows.Forms.ListBox()
         Me.Panel2 = New System.Windows.Forms.Panel()
         Me.DepartmentLabel = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -38,14 +38,14 @@ Partial Class Agente
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'ListBox1
+        'InfoListBox
         '
-        Me.ListBox1.FormattingEnabled = True
-        Me.ListBox1.ItemHeight = 20
-        Me.ListBox1.Location = New System.Drawing.Point(247, 183)
-        Me.ListBox1.Name = "ListBox1"
-        Me.ListBox1.Size = New System.Drawing.Size(676, 324)
-        Me.ListBox1.TabIndex = 0
+        Me.InfoListBox.FormattingEnabled = True
+        Me.InfoListBox.ItemHeight = 20
+        Me.InfoListBox.Location = New System.Drawing.Point(247, 183)
+        Me.InfoListBox.Name = "InfoListBox"
+        Me.InfoListBox.Size = New System.Drawing.Size(676, 324)
+        Me.InfoListBox.TabIndex = 0
         '
         'Panel2
         '
@@ -166,7 +166,7 @@ Partial Class Agente
         Me.Controls.Add(Me.PropostasButton)
         Me.Controls.Add(Me.MarcacoesButton)
         Me.Controls.Add(Me.Panel2)
-        Me.Controls.Add(Me.ListBox1)
+        Me.Controls.Add(Me.InfoListBox)
         Me.Name = "Agente"
         Me.Text = "Agente"
         Me.Panel2.ResumeLayout(False)
@@ -177,7 +177,7 @@ Partial Class Agente
 
     End Sub
 
-    Friend WithEvents ListBox1 As ListBox
+    Friend WithEvents InfoListBox As ListBox
     Friend WithEvents Panel2 As Panel
     Friend WithEvents DepartmentLabel As Label
     Friend WithEvents Label3 As Label

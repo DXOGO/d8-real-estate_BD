@@ -22,7 +22,7 @@ Public Class Register
             nif = Integer.Parse(NIFTextBox.Text)
             nTelemovel = Integer.Parse(N_TelemovelTextBox.Text)
             dataNasc = Data_Nasc.Value
-            dataNascString = dataNasc.ToString("dd/MM/yyyy")
+            dataNascString = dataNasc.ToString("yyyy-MM-dd")
             endereco = EnderecoTextBox.Text
             password = PasswordTextBox.Text
             confirm_password = CPasswordTextBox.Text

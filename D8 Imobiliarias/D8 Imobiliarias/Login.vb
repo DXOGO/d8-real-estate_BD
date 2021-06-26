@@ -3,6 +3,8 @@ Public Class Login
     Public Shared Property user_name As String
     Public Shared Property user_email As String
     Public Shared Property user_NIF As String
+    Public Shared Property user_number As String
+    Public Shared Property user_department As String
     Public Shared Property lista_users As New List(Of Pessoa)
 
     Dim CN As SqlConnection
@@ -53,26 +55,36 @@ Public Class Login
         email = EmailTextBox.Text
         password = PasswordTextBox.Text
         user_name = ""
-        For index As Integer = 0 To lista_users.Count - 1
-            If email = lista_users(index).email Then
-                user_name = lista_users(index).nome
-                user_email = lista_users(index).email
-                user_NIF = lista_users(index).nif
-                Exit For
-                'If email And password Then ' if email and password in data base, ta-se bem
-            End If
-        Next
-        If user_name.Length = 0 Then
-            MsgBox("As suas credenciais não estão na nossa base de dados!")
-            email = ""
-            password = ""
-            EmailTextBox.Text = ""
-            PasswordTextBox.Text = ""
-        Else
+        If email = "agente1@d8.com" Then
+            user_name = "Diogo Romão"
+            user_number = "0001"
+            user_department = "1"
             Me.Hide()
-            Dim newForm As Opcao
-            newForm = New Opcao()
+            Dim newForm As Agente
+            newForm = New Agente()
             newForm.Show()
+        Else
+            For index As Integer = 0 To lista_users.Count - 1
+                If email = lista_users(index).email Then
+                    user_name = lista_users(index).nome
+                    user_email = lista_users(index).email
+                    user_NIF = lista_users(index).nif
+                    Exit For
+                    'If email And password Then ' if email and password in data base, ta-se bem
+                End If
+            Next
+            If user_name.Length = 0 Then
+                MsgBox("As suas credenciais não estão na nossa base de dados!")
+                email = ""
+                password = ""
+                EmailTextBox.Text = ""
+                PasswordTextBox.Text = ""
+            Else
+                Me.Hide()
+                Dim newForm As Opcao
+                newForm = New Opcao()
+                newForm.Show()
+            End If
         End If
     End Sub
 

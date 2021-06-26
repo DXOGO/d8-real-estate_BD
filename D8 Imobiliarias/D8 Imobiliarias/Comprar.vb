@@ -74,6 +74,15 @@ Public Class Comprar
     Private Sub MarcacaoButton_Click(sender As Object, e As EventArgs) Handles MarcacaoButton.Click
         If ImoveisListBox.SelectedIndex = -1 Then ' se não for selecionado nenhum imóvel
             MsgBox("Selecione um imóvel para fazer uma marcação!")
+        Else
+            Dim index = ImoveisListBox.SelectedIndex
+            Selected_Imovel = ImoveisListBox.Items(index)
+            Dim newForm As Info
+            newForm = New Info()
+            newForm.Show()
+            Dim newForm2 As FazerMarcacao
+            newForm2 = New FazerMarcacao()
+            newForm2.Show()
         End If
     End Sub
 

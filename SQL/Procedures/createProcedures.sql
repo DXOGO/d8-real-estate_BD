@@ -162,7 +162,6 @@ BEGIN TRY
 		IF NOT EXISTS(SELECT interessado_nif FROM p5g5.Proj.[interessado] WHERE interessado_nif=@interessado_nif) -- se o int_nif nao existe
 			-- criar interessado
 			INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
-
 		
 		DECLARE @proposta_codigo VARCHAR(5) -- criar codigo da proposta random
 		SET @proposta_codigo = (SELECT p5g5.Proj.[udf_createPropostaCode]())
@@ -170,7 +169,7 @@ BEGIN TRY
 		--adicionar a proposta
 		INSERT INTO p5g5.Proj.[proposta] (proposta_codigo, valor, interessado_nif, imovel_codigo)
 		VALUES(@proposta_codigo, @valor, @interessado_nif, @imovel_codigo) 
-
+	
 	END
 	COMMIT TRANSACTION
 END TRY

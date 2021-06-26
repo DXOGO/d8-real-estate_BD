@@ -8,6 +8,7 @@ Public Class Comprar
     Dim userName = "p5g5"
     Dim userPass = "!DXartur2021"
     Private Sub Comprar_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+        listaInicial.Clear()
         NameLabel.Text = Login.user_name
         EmailLabel.Text = Login.user_email
         NIFLabel.Text = Login.user_NIF

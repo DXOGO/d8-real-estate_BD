@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Vender
     Inherits System.Windows.Forms.Form
 
     'Descartar substituições de formulário para limpar a lista de componentes.
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,9 +20,9 @@ Partial Class Vender
     'OBSERVAÇÃO: o procedimento a seguir é exigido pelo Windows Form Designer
     'Pode ser modificado usando o Windows Form Designer.  
     'Não o modifique usando o editor de códigos.
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.NegocioComboBox = New System.Windows.Forms.ComboBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.ImoveisComerciais = New System.Windows.Forms.ComboBox()
         Me.TipoImovelComboBox = New System.Windows.Forms.ComboBox()
@@ -87,14 +87,14 @@ Partial Class Vender
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
-        'ComboBox1
+        'NegocioComboBox
         '
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"Venda", "Arrendamento", "Trespasse"})
-        Me.ComboBox1.Location = New System.Drawing.Point(338, 258)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(151, 28)
-        Me.ComboBox1.TabIndex = 17
+        Me.NegocioComboBox.FormattingEnabled = True
+        Me.NegocioComboBox.Items.AddRange(New Object() {"Venda", "Arrendamento", "Trespasse"})
+        Me.NegocioComboBox.Location = New System.Drawing.Point(338, 258)
+        Me.NegocioComboBox.Name = "NegocioComboBox"
+        Me.NegocioComboBox.Size = New System.Drawing.Size(151, 28)
+        Me.NegocioComboBox.TabIndex = 17
         '
         'Label1
         '
@@ -704,7 +704,7 @@ Partial Class Vender
         Me.Controls.Add(Me.TipoImovelComboBox)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.Controls.Add(Me.NegocioComboBox)
         Me.Name = "Vender"
         Me.Text = "Vender"
         Me.Panel2.ResumeLayout(False)
@@ -715,7 +715,7 @@ Partial Class Vender
         Me.PerformLayout()
 
     End Sub
-    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents NegocioComboBox As ComboBox
     Friend WithEvents Label1 As Label
     Friend WithEvents ImoveisComerciais As ComboBox
     Friend WithEvents TipoImovelComboBox As ComboBox

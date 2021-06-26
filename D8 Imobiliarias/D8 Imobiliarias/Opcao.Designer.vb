@@ -26,6 +26,7 @@ Partial Class Opcao
         Me.ButtonComprar = New System.Windows.Forms.Button()
         Me.Panel1 = New System.Windows.Forms.Panel()
         Me.ImobiliariasLabel = New System.Windows.Forms.Label()
+        Me.PropostasButton = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -71,16 +72,26 @@ Partial Class Opcao
         Me.ImobiliariasLabel.Text = "Imobiliárias"
         Me.ImobiliariasLabel.UseWaitCursor = True
         '
+        'PropostasButton
+        '
+        Me.PropostasButton.Location = New System.Drawing.Point(500, 442)
+        Me.PropostasButton.Name = "PropostasButton"
+        Me.PropostasButton.Size = New System.Drawing.Size(189, 99)
+        Me.PropostasButton.TabIndex = 15
+        Me.PropostasButton.Text = "Ver Propostas"
+        Me.PropostasButton.UseVisualStyleBackColor = True
+        '
         'Opcao
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 20.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(1175, 650)
+        Me.Controls.Add(Me.PropostasButton)
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.ButtonComprar)
         Me.Controls.Add(Me.ButtonVender)
         Me.Name = "Opcao"
-        Me.Text = "Form3"
+        Me.Text = "Opção"
         Me.Panel1.ResumeLayout(False)
         Me.Panel1.PerformLayout()
         Me.ResumeLayout(False)
@@ -91,4 +102,5 @@ Partial Class Opcao
     Friend WithEvents ButtonComprar As Button
     Friend WithEvents Panel1 As Panel
     Friend WithEvents ImobiliariasLabel As Label
+    Friend WithEvents PropostasButton As Button
 End Class

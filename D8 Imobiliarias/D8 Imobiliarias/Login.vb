@@ -70,7 +70,7 @@ Public Class Login
                     user_email = lista_users(index).email
                     user_NIF = lista_users(index).nif
                     Exit For
-                    'If email And password Then ' if email and password in data base, ta-se bem
+                    'If email And password Then ' if email and password in data base
                 End If
             Next
             If user_name.Length = 0 Then

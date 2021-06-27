@@ -44,8 +44,8 @@ BEGIN
                     -- criar interessado
                     INSERT INTO p5g5.Proj.[interessado] VALUES (@interessado_nif)
 
-                    INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
-                                VALUES (@data_marc, @interessado_nif, @imovel_codigo)
+                INSERT INTO Proj.[marcacao](data_marc, interessado_nif, imovel_codigo)
+                            VALUES (@data_marc, @interessado_nif, @imovel_codigo)
             COMMIT TRAN
             ROLLBACK TRAN
             RAISERROR('Imovel ja tem proposta nesse dia...', 16, 1)

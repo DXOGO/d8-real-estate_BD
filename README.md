@@ -13,7 +13,7 @@ Para além da **adição do relatório final** fizemos as seguintes alterações
 ### SQL
 Remoção das SP's que se encontravam dentro de outras SP's e substitídas com Transações  
 Removidas bastantes funções, views e triggers que não estavam a ser usados  
-Inserções e SP's no DML foram atualizados face às alterações das SP's 
+Inserções e SP's no DML foram atualizados face às alterações das SP's   
 Clean-up ao código em geral
 
 ### Visual Basic

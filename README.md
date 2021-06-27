@@ -19,7 +19,7 @@ Clean-up ao código em geral
 ### Visual Basic
 Filtro de selecionar imóveis com tipo de negócios específicos atualizado  
 Estabelecida a ligação na interface entre os imóveis dos proprietários e os interessados que fazem propostas, ou seja, propostas agora feitas pelos interessados podem ser aceites pelos proprietários, fazendo que passem da tabela de imóveis no mercado (e, consequentemente, as suas dependências) para a tabela de imóveis vendidos.  
-É agora possível agendar uma marcação a um imóvel. Esta é adicionada à tabela de marcações (existe um trigger que testa se a data da marcação é válida ou não).
+É agora possível agendar uma marcação a um imóvel. Esta é adicionada à tabela de marcações (existe um trigger que testa se a data da marcação é válida ou não).   
 O registo de um utilizador na base de dados está agora 100% operacional, bem como a encriptação da sua password (via stored procedure: cp_create_pessoa).
 
 

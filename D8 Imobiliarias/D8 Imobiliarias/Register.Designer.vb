@@ -58,7 +58,6 @@ Partial Class Register
         Me.PasswordTextBox = New System.Windows.Forms.TextBox()
         Me.CPasswordTextBox = New System.Windows.Forms.TextBox()
         Me.Label23 = New System.Windows.Forms.Label()
-        Me.Button1 = New System.Windows.Forms.Button()
         Me.Panel1.SuspendLayout()
         Me.SuspendLayout()
         '
@@ -366,15 +365,7 @@ Partial Class Register
         Me.Label23.Size = New System.Drawing.Size(171, 20)
         Me.Label23.TabIndex = 20
         Me.Label23.Text = "Confirmar palavra-passe"
-        '
-        'Button1
-        '
-        Me.Button1.Location = New System.Drawing.Point(534, 26)
-        Me.Button1.Name = "Button1"
-        Me.Button1.Size = New System.Drawing.Size(94, 29)
-        Me.Button1.TabIndex = 21
-        Me.Button1.Text = "Button1"
-        Me.Button1.UseVisualStyleBackColor = True
+
         '
         'Register
         '
@@ -382,7 +373,6 @@ Partial Class Register
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
         Me.ClientSize = New System.Drawing.Size(1175, 650)
-        Me.Controls.Add(Me.Button1)
         Me.Controls.Add(Me.Label23)
         Me.Controls.Add(Me.CPasswordTextBox)
         Me.Controls.Add(Me.PasswordTextBox)
@@ -462,13 +452,6 @@ Partial Class Register
         newForm.Show()
     End Sub
 
-    Friend WithEvents Button1 As Button
-    Private Sub Button1_Click(sender As Object, e As EventArgs) Handles Button1.Click
-        Me.Hide()
-        Dim newForm As Comprar
-        newForm = New Comprar()
-        newForm.Show()
-    End Sub
 
     Friend WithEvents ImobiliariasLabel As Label
 

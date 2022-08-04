@@ -6,3 +6,4 @@ Foi criada uma base de dados de uma imobiliária e interface gŕafica para uso d
 Diogo Cruz: [DXOGO](https://www.github.com/DXOGO)  
 Artur Romão: [artur-romao](https://www.github.com/artur-romao)
 
+Final Grade: **16**/20
